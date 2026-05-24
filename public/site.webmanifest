@@ -1,10 +1,11 @@
 {
-  "name": "neko233-com",
+  "name": "neko233 · 可乐鸡翅",
   "short_name": "neko233",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#05070d",
   "theme_color": "#05070d",
-  "description": "Personal static blog for neko233-com on Cloudflare.",
+  "description": "Personal static blog for neko233（可乐鸡翅） on Cloudflare Pages.",
+  "lang": "zh-CN",
   "icons": []
 }

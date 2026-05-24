@@ -12,12 +12,12 @@ export const posts: Post[] = [
     slug: "hello-edge",
     title: "Hello from the edge",
     description:
-      "A first note from the neko233-com Cloudflare edge blog.",
+      "A first note from the neko233（可乐鸡翅）Cloudflare edge blog.",
     date: "2026-05-24",
     excerpt:
       "A first note about using one repository as both GitHub profile and Cloudflare blog source.",
     content: `
-      <p class="lede">This blog is served from the same repository that powers the GitHub profile for neko233-com.</p>
+      <p class="lede">This blog belongs to neko233（可乐鸡翅） and is served from the same repository that powers the GitHub profile card.</p>
       <p>
         The boundary is simple: GitHub renders <code>README.md</code>, while Cloudflare serves the Vite-built static site in
         <code>dist/</code>. The profile can stay animated and data-rich without mixing deployment notes into the account page.
@@ -37,7 +37,7 @@ guide: blog.md</code></pre>
     slug: "profile-and-blog-split",
     title: "Profile and blog split",
     description:
-      "How neko233-com keeps GitHub profile animation and Cloudflare blog deployment separate in one repository.",
+      "How neko233 keeps GitHub profile animation and Cloudflare blog deployment separate in one repository.",
     date: "2026-05-24",
     excerpt:
       "One repository can serve a GitHub profile and a Cloudflare static blog when the boundaries are explicit.",

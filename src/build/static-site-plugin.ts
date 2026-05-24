@@ -2,7 +2,7 @@ import type { Plugin } from "vite";
 import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { getPostBySlug, getSortedPosts } from "../data/posts";
-import { siteConfig } from "../data/site";
+import { siteConfig, siteDisplayName } from "../data/site";
 import { formatDisplayDate, formatRssDate } from "../lib/dates";
 import { escapeHtml } from "../lib/html";
 
@@ -59,7 +59,7 @@ function layout(options: {
   const canonical = `${siteConfig.url}${path}`;
 
   return `<!doctype html>
-<html lang="en">
+<html lang="zh-CN">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -72,7 +72,7 @@ function layout(options: {
     ${publishedTime ? `<meta property="article:published_time" content="${publishedTime}" />` : ""}
     <meta name="twitter:card" content="summary_large_image" />
     <title>${escapeHtml(title)}</title>
-    <link rel="alternate" type="application/rss+xml" title="${escapeHtml(siteConfig.title)} RSS" href="/feed.xml" />
+    <link rel="alternate" type="application/rss+xml" title="${escapeHtml(siteDisplayName())} RSS" href="/feed.xml" />
     <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
     <link rel="manifest" href="/site.webmanifest" />
     ${assets.css ? `<link rel="stylesheet" href="${assetHref(assets.css)}" />` : ""}
@@ -88,7 +88,10 @@ function renderHeader(active: "home" | "posts" | "post"): string {
   return `<header class="site-header" data-reveal>
       <a class="brand magnetic" href="/">
         <span class="brand-mark" aria-hidden="true"></span>
-        ${siteConfig.title}
+        <span class="brand-stack">
+          <span class="brand-name">${siteConfig.name}</span>
+          <span class="brand-zh">${siteConfig.nameZh}</span>
+        </span>
       </a>
       <nav aria-label="Primary navigation">
         <a href="/#posts"${active === "posts" ? ' aria-current="page"' : ""}>Posts</a>
@@ -131,8 +134,9 @@ function renderHomePage(assets: AssetRefs): string {
           <span class="orbit-core"></span>
         </div>
         <div class="hero-copy" data-reveal>
-          <p class="eyebrow">Cloudflare powered personal blog</p>
-          <h1 id="hero-title" data-scramble="${escapeHtml(siteConfig.title)}">${escapeHtml(siteConfig.title)}</h1>
+          <p class="eyebrow">${siteConfig.nameZh} · Cloudflare Edge Blog</p>
+          <h1 id="hero-title" data-scramble="${escapeHtml(siteConfig.name)}">${escapeHtml(siteConfig.name)}</h1>
+          <p class="hero-subname" data-reveal>${siteConfig.nameZh}</p>
           <p class="lede">Notes from the edge: code, automation, systems, and the small details that make tools feel alive.</p>
           <div class="hero-actions">
             <a class="button primary magnetic" href="#posts">Read posts</a>
@@ -181,7 +185,7 @@ function renderHomePage(assets: AssetRefs): string {
     </main>
 
     <footer class="footer">
-      <span>${siteConfig.title}</span>
+      <span>${siteDisplayName()}</span>
       <span>
         <a href="/feed.xml">RSS</a>
         <a href="${siteConfig.github}/blob/main/blog.md">blog.md</a>
@@ -189,7 +193,7 @@ function renderHomePage(assets: AssetRefs): string {
     </footer>`;
 
   return layout({
-    title: `${siteConfig.title} | ${siteConfig.tagline}`,
+    title: `${siteConfig.name} | ${siteConfig.nameZh}`,
     description: siteConfig.description,
     body,
     assets,
@@ -216,7 +220,7 @@ function renderPostPage(
     </main>`;
 
   return layout({
-    title: `${post.title} | ${siteConfig.title}`,
+    title: `${post.title} | ${siteConfig.name}`,
     description: post.description,
     body,
     assets,
@@ -239,8 +243,8 @@ function render404Page(assets: AssetRefs): string {
     </main>`;
 
   return layout({
-    title: `404 | ${siteConfig.title}`,
-    description: "Page not found on neko233-com.",
+    title: `404 | ${siteConfig.name}`,
+    description: `Page not found on ${siteDisplayName()}.`,
     body,
     assets,
     path: "/404.html",
@@ -266,10 +270,10 @@ function renderFeed(): string {
   return `<?xml version="1.0" encoding="UTF-8" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>${escapeHtml(siteConfig.title)}</title>
+    <title>${escapeHtml(siteConfig.name)}</title>
     <link>${siteConfig.url}/</link>
     <description>${escapeHtml(siteConfig.description)}</description>
-    <language>en</language>
+    <language>zh-CN</language>
     <lastBuildDate>${latest ? formatRssDate(latest.date) : formatRssDate("2026-05-24")}</lastBuildDate>
     <atom:link href="${siteConfig.url}/feed.xml" rel="self" type="application/rss+xml" />
     ${items}

@@ -4,6 +4,9 @@
   "private": true,
   "description": "GitHub profile repository and Cloudflare Pages blog for neko233-com.",
   "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
   "scripts": {
     "dev": "vite",
     "build": "vite build",

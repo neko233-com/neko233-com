@@ -97,6 +97,32 @@ nav {
   transition: transform 200ms ease;
 }
 
+.brand-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  line-height: 1.05;
+}
+
+.brand-name {
+  font-size: 15px;
+  letter-spacing: 0.02em;
+}
+
+.brand-zh {
+  color: var(--pink);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.hero-subname {
+  margin: -6px 0 18px;
+  color: var(--pink);
+  font-size: clamp(28px, 5vw, 52px);
+  font-weight: 800;
+  letter-spacing: 0.08em;
+}
+
 .brand-mark {
   width: 12px;
   height: 12px;

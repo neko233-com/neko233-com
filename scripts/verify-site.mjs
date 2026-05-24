@@ -10,19 +10,33 @@ const requiredFiles = [
   "dist/sitemap.xml",
   "dist/robots.txt",
   "dist/site.webmanifest",
+  "dist/_headers",
   "dist/posts/hello-edge/index.html",
   "dist/posts/profile-and-blog-split/index.html",
+  ".node-version",
   "wrangler.toml",
   "worker/worker.ts",
   "functions/health.js",
   "AGENTS.md",
   "blog.md",
+  "package.json",
+  "vite.config.ts",
 ];
 
 for (const file of requiredFiles) {
   if (!existsSync(file)) {
     throw new Error(`Missing required file: ${file}`);
   }
+}
+
+const nodeVersion = readFileSync(".node-version", "utf8").trim();
+if (nodeVersion !== "20") {
+  throw new Error(`.node-version must be 20 for Cloudflare Pages, got: ${nodeVersion}`);
+}
+
+const packageJson = JSON.parse(readFileSync("package.json", "utf8"));
+if (packageJson.scripts?.build !== "vite build") {
+  throw new Error('package.json scripts.build must be "vite build" for Cloudflare Pages');
 }
 
 const index = readFileSync("dist/index.html", "utf8");
@@ -39,8 +53,18 @@ for (const ref of localRefs) {
   }
 }
 
+for (const expected of ["neko233", "可乐鸡翅"]) {
+  if (!index.includes(expected)) {
+    throw new Error(`dist/index.html is missing blog identity: ${expected}`);
+  }
+}
+
 const feed = readFileSync("dist/feed.xml", "utf8");
 const sitemap = readFileSync("dist/sitemap.xml", "utf8");
+
+if (!feed.includes("<title>neko233</title>")) {
+  throw new Error("RSS feed channel title must be neko233");
+}
 
 for (const slug of ["hello-edge", "profile-and-blog-split"]) {
   const url = `/posts/${slug}/`;
