@@ -106,6 +106,9 @@ function layout(options: {
     <link rel="alternate" type="application/rss+xml" title="${escapeHtml(siteDisplayName(locale))} RSS" href="/feed.xml" />
     <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
     <link rel="manifest" href="/site.webmanifest" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=M+PLUS+1p:wght@400;700;800&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet" />
     ${assets.css ? `<link rel="stylesheet" href="${assetHref(assets.css)}" />` : ""}
     <script>${autoLocaleRedirectScript}</script>
     ${jsonLd.map((block) => `<script type="application/ld+json">${block}</script>`).join("\n    ")}
@@ -122,11 +125,20 @@ function renderLangSwitch(locale: Locale): string {
   return `<button class="lang-switch magnetic" type="button" data-locale-target="${other}" aria-label="${escapeHtml(t("langAria", locale))}">${escapeHtml(t("langSwitch", locale))}</button>`;
 }
 
+function renderSakuraLayer(): string {
+  return `<div class="sakura-layer" aria-hidden="true">${Array.from({ length: 16 }, (_, index) => {
+    const left = 4 + (index * 6.1) % 92;
+    const delay = (index * 0.85).toFixed(2);
+    const duration = 12 + (index % 5) * 2;
+    return `<span style="--petal-left:${left}%;--petal-delay:${delay}s;--petal-duration:${duration}s"></span>`;
+  }).join("")}</div>`;
+}
+
 function renderHeader(locale: Locale, active: "home" | "posts" | "post"): string {
   const base = homePath(locale);
   return `<header class="site-header" data-reveal>
       <a class="brand magnetic" href="${base}">
-        <span class="brand-mark" aria-hidden="true"></span>
+        <span class="brand-mark" aria-hidden="true">✦</span>
         <span class="brand-stack">
           <span class="brand-name">${siteConfig.name}</span>
           <span class="brand-zh">${locale === "zh" ? siteConfig.nameZh : "Ke Le Ji Chi"}</span>
@@ -134,8 +146,9 @@ function renderHeader(locale: Locale, active: "home" | "posts" | "post"): string
       </a>
       <nav aria-label="Primary navigation">
         <a href="${base}#about">${t("navAbout", locale)}</a>
-        <a href="${base}#repos">${t("navRepos", locale)}</a>
         <a href="${base}#posts"${active === "posts" ? ' aria-current="page"' : ""}>${t("navPosts", locale)}</a>
+        <a href="${base}#repos">${t("navRepos", locale)}</a>
+        <a href="${base}#contact">${t("navContact", locale)}</a>
         <a href="${siteConfig.github}">${t("navGithub", locale)}</a>
         ${renderLangSwitch(locale)}
       </nav>
@@ -178,54 +191,36 @@ function renderPostRows(locale: Locale): string {
 export function renderHomePage(locale: Locale, assets: AssetRefs): string {
   const profile = getProfile(locale);
   const base = homePath(locale);
-  const terminalLines = profile.terminalLines
-    .map((line) => `<p><span>$</span> ${escapeHtml(line)}</p>`)
-    .join("");
 
   const body = `
+    ${renderSakuraLayer()}
     ${renderHeader(locale, "home")}
     <canvas id="aurora-canvas" aria-hidden="true"></canvas>
     <div class="cursor-glow" aria-hidden="true"></div>
-    <div class="noise-overlay" aria-hidden="true"></div>
+    <div class="anime-blob anime-blob-a" aria-hidden="true"></div>
+    <div class="anime-blob anime-blob-b" aria-hidden="true"></div>
 
     <main>
       <section class="hero" aria-labelledby="hero-title">
-        <div class="hero-grid" aria-hidden="true" data-grid-warp>
-          ${Array.from({ length: 12 }, () => "<span></span>").join("")}
-        </div>
         <div class="hero-layout">
-          <div class="hero-copy" data-reveal>
+          <div class="hero-copy panel-card" data-reveal>
             <p class="eyebrow">${t("heroEyebrow", locale)}</p>
-            <h1 id="hero-title" data-scramble="${escapeHtml(siteConfig.name)}">${escapeHtml(siteConfig.name)}</h1>
-            <p class="hero-subname" data-reveal>${locale === "zh" ? siteConfig.nameZh : "Ke Le Ji Chi"}</p>
-            <p class="lede">${escapeHtml(profile.headline)}</p>
+            <h1 id="hero-title">${escapeHtml(siteConfig.name)}</h1>
+            <p class="hero-subname">${locale === "zh" ? siteConfig.nameZh : "Ke Le Ji Chi"}</p>
+            <p class="hero-role">${escapeHtml(profile.headline)}</p>
             <p class="hero-summary">${escapeHtml(profile.summary)}</p>
             <div class="hero-actions">
               <a class="button primary magnetic" href="${base}#posts">${t("heroCtaPosts", locale)}</a>
-              <a class="button secondary magnetic" href="${siteConfig.github}">${t("heroCtaGithub", locale)}</a>
+              <a class="button secondary magnetic" href="mailto:${siteConfig.email}">${t("heroCtaContact", locale)}</a>
+              <a class="button ghost magnetic" href="${siteConfig.github}">${t("heroCtaGithub", locale)}</a>
             </div>
           </div>
           <div class="hero-stage" data-reveal style="--reveal-delay:120ms">
-            <div class="hero-stage-frame">
-              <span class="hero-stage-tag">${locale === "zh" ? "Live2D · 看板娘在线" : "Live2D · on stage"}</span>
+            <div class="hero-stage-frame panel-card">
+              <span class="hero-stage-tag">Live2D</span>
               <div id="live2d-stage" class="live2d-stage" aria-label="${locale === "zh" ? "Live2D 角色展示" : "Live2D character display"}"></div>
             </div>
           </div>
-        </div>
-      </section>
-
-      <section class="ticker" aria-label="Profile highlights">
-        <div data-reveal style="--reveal-delay:60ms">
-          <span>${t("tickerRole", locale)}</span>
-          <strong>${escapeHtml(profile.tickerRole)}</strong>
-        </div>
-        <div data-reveal style="--reveal-delay:120ms">
-          <span>${t("tickerFocus", locale)}</span>
-          <strong>${escapeHtml(profile.tickerFocus)}</strong>
-        </div>
-        <div data-reveal style="--reveal-delay:180ms">
-          <span>${t("tickerStack", locale)}</span>
-          <strong>${escapeHtml(profile.tickerStack)}</strong>
         </div>
       </section>
 
@@ -235,29 +230,22 @@ export function renderHomePage(locale: Locale, assets: AssetRefs): string {
           <h2 id="about-title">${t("aboutTitle", locale)}</h2>
         </div>
         <div class="about-grid">
-          <article class="about-card" data-reveal>
-            <h3>${locale === "zh" ? "当前方向" : "Current focus"}</h3>
-            <p>${escapeHtml(profile.currentFocus)}</p>
+          <article class="about-card panel-card" data-reveal>
+            <h3>${t("doingNowTitle", locale)}</h3>
+            <p>${escapeHtml(profile.doingNow)}</p>
           </article>
-          <article class="about-card" data-reveal style="--reveal-delay:90ms">
-            <h3>${locale === "zh" ? "过往经验" : "Previous experience"}</h3>
-            <p>${escapeHtml(profile.previousExperience)}</p>
+          <article class="about-card panel-card" data-reveal style="--reveal-delay:90ms">
+            <h3>${t("businessTitle", locale)}</h3>
+            <p>${escapeHtml(profile.businessDirection)}</p>
           </article>
-          <article class="about-card about-tags" data-reveal style="--reveal-delay:180ms">
-            <h3>${locale === "zh" ? "技术关键词" : "Expertise"}</h3>
-            <ul class="tag-list">
-              ${profile.expertise.map((item) => `<li>${escapeHtml(item)}</li>`).join("")}
-            </ul>
+          <article class="about-card panel-card" data-reveal style="--reveal-delay:180ms">
+            <h3>${t("techTitle", locale)}</h3>
+            <p>${escapeHtml(profile.techDirection)}</p>
           </article>
         </div>
-      </section>
-
-      <section class="section" id="repos" aria-labelledby="repos-title">
-        <div class="section-heading" data-reveal>
-          <p class="eyebrow">${t("reposEyebrow", locale)}</p>
-          <h2 id="repos-title">${t("reposTitle", locale)}</h2>
+        <div class="tag-strip" data-reveal style="--reveal-delay:240ms">
+          ${profile.expertise.map((item) => `<span>${escapeHtml(item)}</span>`).join("")}
         </div>
-        <div class="repo-list">${renderRepoRows(locale)}</div>
       </section>
 
       <section class="section" id="posts" aria-labelledby="posts-title">
@@ -268,18 +256,31 @@ export function renderHomePage(locale: Locale, assets: AssetRefs): string {
         <div class="post-list">${renderPostRows(locale)}</div>
       </section>
 
-      <section class="section split" id="edge" aria-labelledby="edge-title">
-        <div data-reveal>
-          <p class="eyebrow">${t("stackEyebrow", locale)}</p>
-          <h2 id="edge-title">${t("stackTitle", locale)}</h2>
+      <section class="section" id="repos" aria-labelledby="repos-title">
+        <div class="section-heading" data-reveal>
+          <p class="eyebrow">${t("reposEyebrow", locale)}</p>
+          <h2 id="repos-title">${t("reposTitle", locale)}</h2>
         </div>
-        <div class="terminal" data-reveal data-terminal>${terminalLines}</div>
+        <div class="repo-list">${renderRepoRows(locale)}</div>
+      </section>
+
+      <section class="section contact-section" id="contact" aria-labelledby="contact-title">
+        <div class="contact-card panel-card" data-reveal>
+          <p class="eyebrow">${t("contactEyebrow", locale)}</p>
+          <h2 id="contact-title">${t("contactTitle", locale)}</h2>
+          <p class="contact-body">${escapeHtml(t("contactBody", locale))}</p>
+          <div class="contact-line">
+            <span>${t("contactEmailLabel", locale)}</span>
+            <a class="contact-email magnetic" href="mailto:${siteConfig.email}">${siteConfig.email}</a>
+          </div>
+        </div>
       </section>
     </main>
 
     <footer class="footer">
       <span>${siteDisplayName(locale)}</span>
-      <span>
+      <span class="footer-links">
+        <a href="mailto:${siteConfig.email}">${siteConfig.email}</a>
         <a href="/feed.xml">${t("rss", locale)}</a>
         <a href="${siteConfig.githubProfile}/blob/main/blog.md">blog.md</a>
       </span>
@@ -305,9 +306,9 @@ export function renderHomePage(locale: Locale, assets: AssetRefs): string {
 export function renderPostPage(post: Post, locale: Locale, assets: AssetRefs): string {
   const content = getPostContent(post, locale);
   const body = `
+    ${renderSakuraLayer()}
     ${renderHeader(locale, "post")}
     <canvas id="aurora-canvas" aria-hidden="true" data-subtle></canvas>
-    <div class="noise-overlay" aria-hidden="true"></div>
 
     <main class="section article">
       <article itemscope itemtype="https://schema.org/BlogPosting">
@@ -333,6 +334,7 @@ export function renderPostPage(post: Post, locale: Locale, assets: AssetRefs): s
 
 export function render404Page(locale: Locale, assets: AssetRefs): string {
   const body = `
+    ${renderSakuraLayer()}
     ${renderHeader(locale, "home")}
     <main class="section article not-found">
       <canvas id="aurora-canvas" aria-hidden="true" data-subtle></canvas>

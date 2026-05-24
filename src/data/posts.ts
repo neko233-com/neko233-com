@@ -21,24 +21,24 @@ export const posts: Post[] = [
     zh: {
       title: "从游戏全栈到 Web：我实际在写什么",
       description: "neko233（可乐鸡翅）聊 Unity + Go/Kotlin 游戏全栈经历，以及现在在 Web / Edge 上交付的东西。",
-      excerpt: "不是转型故事会，是我现在还在维护的技术栈和仓库。",
+      excerpt: "我现在还在维护的技术栈和仓库。",
       content: `
-      <p class="lede">可乐鸡翅，全栈，现任技术负责人。</p>
+      <p class="lede">我是 neko233（可乐鸡翅），全栈开发，现任技术负责人。</p>
       <p>
-        游戏行业那几年，主要干两件事：<code>Unity</code> 客户端，和 <code>Go</code> + <code>Kotlin</code> 分布式后端。
-        带过人，扛过线上，也写过不少工具库。
+        游戏行业那几年，主要做 <code>Unity</code> 客户端，和 <code>Go</code> + <code>Kotlin</code> 分布式后端。
+        也带过团队，写过一些工具库。
       </p>
       <p>
-        现在在 Web 侧继续写能进生产的东西：静态站、Edge 部署、调度系统、配置迁移、证书自动化。
-        博客会同步 GitHub 仓库里的真实代码，不吹概念。
+        现在在 Web 侧继续做能上线的东西：静态站、Edge 部署、调度系统、配置迁移、证书自动化。
+        博客会同步 GitHub 仓库里的代码。
       </p>
-      <h2>我常用的硬技能</h2>
+      <h2>平时用到的技术</h2>
       <ul>
-        <li>客户端：Unity、TypeScript 前端、Live2D 动效（这个站首页就有）。</li>
+        <li>客户端：Unity、TypeScript 前端、Live2D 动效（这个站首页有）。</li>
         <li>后端：Go、Kotlin、分布式任务调度、配置版本迁移。</li>
         <li>交付：Vite 构建、Cloudflare Pages/Workers、无数据库静态站。</li>
       </ul>
-      <p>下面「仓库」和「文章」都是我在维护的东西，点开就能看代码。</p>
+      <p>下面「仓库」和「文章」都是我在维护的内容，可以直接看代码。</p>
     `,
     },
     en: {
@@ -126,7 +126,7 @@ guide: blog.md</code></pre>
       </p>
       <p>
         Vite 8 + TypeScript 构建静态 <code>dist/</code>，中英文路由分开，SEO / GEO 都照顾到。
-        首页还塞了个 Live2D 看板娘，因为好看。
+        首页还放了个 Live2D 角色。
       </p>
       <pre><code>GitHub 名片: README.md
 双语博客: src/ → dist/

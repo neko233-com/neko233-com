@@ -5,7 +5,8 @@
   "display": "standalone",
   "background_color": "#05070d",
   "theme_color": "#05070d",
-  "description": "neko233（可乐鸡翅）个人站：全栈、技术负责人、Unity/Go/Kotlin 出身，Live2D 动效，GitHub 仓库。",
+  "description": "neko233（可乐鸡翅）个人博客：项目记录、业务与技术方向、开源仓库。",
+  "theme_color": "#161025",
   "lang": "zh-CN",
   "icons": []
 }

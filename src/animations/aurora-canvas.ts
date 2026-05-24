@@ -40,16 +40,16 @@ function startAurora(canvas: HTMLCanvasElement, context: CanvasRenderingContext2
         vx: (Math.random() - 0.5) * (subtle ? 0.25 : 0.55),
         vy: (Math.random() - 0.5) * (subtle ? 0.25 : 0.55),
         radius: Math.random() * 1.8 + 0.6,
-        hue: 180 + Math.random() * 120,
+        hue: 290 + Math.random() * 70,
       });
     }
   }
 
   function drawBackground(): void {
     const gradient = context.createLinearGradient(0, 0, width, height);
-    gradient.addColorStop(0, "rgba(5, 7, 13, 0.92)");
-    gradient.addColorStop(0.45, "rgba(7, 16, 29, 0.88)");
-    gradient.addColorStop(1, "rgba(15, 21, 32, 0.9)");
+    gradient.addColorStop(0, "rgba(22, 16, 37, 0.92)");
+    gradient.addColorStop(0.45, "rgba(34, 24, 53, 0.88)");
+    gradient.addColorStop(1, "rgba(22, 16, 37, 0.9)");
     context.fillStyle = gradient;
     context.fillRect(0, 0, width, height);
 
@@ -62,9 +62,9 @@ function startAurora(canvas: HTMLCanvasElement, context: CanvasRenderingContext2
       pointer.y,
       width * 0.45,
     );
-    glow.addColorStop(0, `rgba(0, 231, 255, ${subtle ? 0.04 : 0.08 + pulse * 0.04})`);
-    glow.addColorStop(0.55, "rgba(255, 79, 216, 0.03)");
-    glow.addColorStop(1, "rgba(5, 7, 13, 0)");
+    glow.addColorStop(0, `rgba(255, 158, 200, ${subtle ? 0.04 : 0.08 + pulse * 0.04})`);
+    glow.addColorStop(0.55, "rgba(143, 212, 255, 0.03)");
+    glow.addColorStop(1, "rgba(22, 16, 37, 0)");
     context.fillStyle = glow;
     context.fillRect(0, 0, width, height);
   }

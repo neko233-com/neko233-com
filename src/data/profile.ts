@@ -2,85 +2,73 @@ import type { Locale } from "../i18n/locale";
 
 const profileCopy = {
   zh: {
-    role: "全栈开发",
+    role: "全栈开发工程师",
     title: "技术负责人",
-    headline: "Unity / Go / Kotlin 出身，现在在 Web 上写能上线的代码",
+    headline: "全栈开发工程师 · 技术负责人",
     summary:
-      "我是 neko233，外号可乐鸡翅。带团队、扛线上、写客户端也写后端。这个站放仓库、踩坑记录，还有 Live2D 看板娘和改 UI 改到上头时的二次元审美残留。",
-    currentFocus:
-      "Web 全栈 + 分布式：TypeScript、Vite、Cloudflare Edge。能构建、能部署、能维护，不整 PPT 工程。",
+      "你好，我是 neko233，也叫可乐鸡翅。这个博客用来记录我在做的项目、开发笔记，以及 GitHub 上的开源仓库。",
+    doingNow:
+      "目前在维护个人博客、GitHub 开源项目，以及几个 Web 和后端相关的 side project。日常会写代码、做构建部署，也会整理踩坑记录发到文章里。",
+    businessDirection:
+      "业务方向主要是 Web 产品与业务系统开发：从需求沟通、方案设计到开发上线，关注功能能否稳定跑在生产环境。",
+    techDirection:
+      "技术方向以前在游戏行业做 Unity 客户端和 Go/Kotlin 分布式后端；现在在 Web 侧用 TypeScript、Vite，部署走 Cloudflare Edge，也会做一些 Live2D 前端动效。",
     previousExperience:
-      "游戏行业干了很多年：Unity 客户端，Go + Kotlin 分布式后端，技术负责人。大 DAU、大表、线上故障都见过。",
+      "此前在游戏行业担任全栈工程师与技术负责人，负责 Unity 客户端与 Go + Kotlin 分布式后端。",
     expertise: [
       "Unity 客户端",
       "Go / Kotlin 后端",
-      "分布式调度",
       "TypeScript / Vite",
       "Cloudflare Edge",
-      "Live2D / 前端动效",
+      "分布式调度",
+      "Live2D 动效",
     ],
     keywords: [
       "neko233",
       "可乐鸡翅",
+      "个人博客",
       "全栈开发",
       "技术负责人",
       "Unity",
       "Go",
       "Kotlin",
-      "分布式后端",
-      "游戏开发",
+      "Web 开发",
       "Live2D",
-      "GitHub 开源",
-    ],
-    tickerRole: "技术负责人",
-    tickerFocus: "Web 全栈 · Edge",
-    tickerStack: "Unity · Go · Kotlin · TS",
-    terminalLines: [
-      "unity client: shipped",
-      "go/kotlin backend: distributed mesh",
-      "vite build → dist/",
-      "cloudflare edge: live",
     ],
   },
   en: {
-    role: "Full-stack dev",
-    title: "Tech lead",
-    headline: "Game-industry full-stack. Now shipping on the web.",
+    role: "Full-stack Engineer",
+    title: "Tech Lead",
+    headline: "Full-stack Engineer · Tech Lead",
     summary:
-      "I'm neko233 (Ke Le Ji Chi). I lead teams, run production systems, and still write code myself. This site is my repos, war stories, Live2D on the homepage, and the anime-flavored UI experiments I can't stop tweaking.",
-    currentFocus:
-      "Web full-stack and distributed systems: TypeScript, Vite, Cloudflare Edge. Build it, deploy it, keep it running.",
+      "Hi, I'm neko233 (Ke Le Ji Chi). This blog tracks my projects, dev notes, and open-source repos on GitHub.",
+    doingNow:
+      "Currently maintaining this blog, GitHub repos, and a few web/backend side projects. Day to day: coding, build/deploy, and writing up lessons learned.",
+    businessDirection:
+      "Business focus: web products and business systems — from requirements and design through development to production rollout.",
+    techDirection:
+      "Technical focus: previously Unity clients and Go/Kotlin distributed backends in games; now TypeScript/Vite on the web, Cloudflare Edge deploys, and Live2D UI motion.",
     previousExperience:
-      "Years in games: Unity clients, Go + Kotlin distributed backends, tech lead. High traffic, big tables, real incidents.",
+      "Previously a full-stack engineer and tech lead in the game industry, working on Unity clients and Go + Kotlin distributed backends.",
     expertise: [
       "Unity client",
       "Go / Kotlin backend",
-      "Distributed scheduling",
       "TypeScript / Vite",
       "Cloudflare Edge",
-      "Live2D / motion UI",
+      "Distributed scheduling",
+      "Live2D motion",
     ],
     keywords: [
       "neko233",
       "Ke Le Ji Chi",
+      "personal blog",
       "full-stack engineer",
       "tech lead",
       "Unity",
       "Go",
       "Kotlin",
-      "distributed backend",
-      "game development",
+      "web development",
       "Live2D",
-      "GitHub open source",
-    ],
-    tickerRole: "Tech lead",
-    tickerFocus: "Web · Edge",
-    tickerStack: "Unity · Go · Kotlin · TS",
-    terminalLines: [
-      "unity client: shipped",
-      "go/kotlin backend: distributed mesh",
-      "vite build → dist/",
-      "cloudflare edge: live",
     ],
   },
 } as const;

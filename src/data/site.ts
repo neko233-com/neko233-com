@@ -6,23 +6,24 @@ export const siteConfig = {
   url: "https://neko233.com",
   github: "https://github.com/neko233-com",
   githubProfile: "https://github.com/neko233-com/neko233-com",
-  themeColor: "#05070d",
+  email: "qq1417015340@gmail.com",
+  themeColor: "#161025",
 } as const;
 
 const localized = {
   zh: {
-    tagline: "全栈 · 技术负责人",
+    tagline: "全栈开发工程师 · 技术负责人",
     description:
-      "neko233（可乐鸡翅）的个人站：Unity / Go / Kotlin 出身，现在在 Web 和 Edge 上写能上线的代码。仓库、踩坑、Live2D 动效，都在这里。",
+      "neko233（可乐鸡翅）的个人博客：记录正在做的项目、业务与技术方向，以及开发笔记与开源仓库。",
     author: "neko233（可乐鸡翅）",
-    blogLabel: "中文博客",
+    blogLabel: "个人博客",
   },
   en: {
-    tagline: "Full-stack · Tech lead",
+    tagline: "Full-stack Engineer · Tech Lead",
     description:
-      "neko233 (Ke Le Ji Chi): game-industry full-stack background, now shipping on the web and Cloudflare Edge. Repos, notes, Live2D UI experiments.",
+      "Personal blog of neko233 (Ke Le Ji Chi): projects in progress, business and technical focus, dev notes, and open-source repos.",
     author: "neko233 (Ke Le Ji Chi)",
-    blogLabel: "Bilingual Blog",
+    blogLabel: "Personal Blog",
   },
 } as const;
 

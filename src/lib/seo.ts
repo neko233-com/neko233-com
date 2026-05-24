@@ -19,6 +19,7 @@ export function renderPersonJsonLd(locale: Locale): string {
     url: siteConfig.url,
     jobTitle: `${profile.role} / ${profile.title}`,
     description: profile.summary,
+    email: siteConfig.email,
     sameAs: [siteConfig.github],
     knowsAbout: profile.expertise,
   });
@@ -110,13 +111,17 @@ export function renderFaqJsonLd(locale: Locale): string {
     locale === "zh"
       ? [
           { q: "neko233（可乐鸡翅）是谁？", a: profile.summary },
-          { q: "neko233 目前主攻什么方向？", a: profile.currentFocus },
-          { q: "neko233 之前做什么工作？", a: profile.previousExperience },
+          { q: "neko233 现在在做什么？", a: profile.doingNow },
+          { q: "neko233 的业务方向是什么？", a: profile.businessDirection },
+          { q: "neko233 的技术方向是什么？", a: profile.techDirection },
+          { q: "如何联系 neko233？", a: siteConfig.email },
         ]
       : [
           { q: "Who is neko233 (Ke Le Ji Chi)?", a: profile.summary },
-          { q: "What is neko233 focused on now?", a: profile.currentFocus },
-          { q: "What did neko233 do before?", a: profile.previousExperience },
+          { q: "What is neko233 working on?", a: profile.doingNow },
+          { q: "What is neko233's business focus?", a: profile.businessDirection },
+          { q: "What is neko233's technical focus?", a: profile.techDirection },
+          { q: "How to contact neko233?", a: siteConfig.email },
         ];
 
   return json({
@@ -159,8 +164,13 @@ export function renderLlmsTxt(): string {
 - Name: neko233 / 可乐鸡翅 / Ke Le Ji Chi
 - Role: ${profile.role} / ${profileEn.role}
 - Title: ${profile.title} / ${profileEn.title}
-- Current focus: Web full-stack + Cloudflare Edge / Web 全栈 + Cloudflare Edge
-- Background: Unity + Go/Kotlin game-industry full-stack / 游戏行业 Unity + Go/Kotlin 全栈
+- Business: ${profile.businessDirection}
+- Tech: ${profile.techDirection}
+- Contact: ${siteConfig.email}
+- Background: ${profile.previousExperience}
+
+> EN business: ${profileEn.businessDirection}
+> EN tech: ${profileEn.techDirection}
 
 ## Languages / 语言
 - Chinese: ${siteConfig.url}/

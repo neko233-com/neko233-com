@@ -81,8 +81,12 @@ const feed = readFileSync("dist/feed.xml", "utf8");
 const sitemap = readFileSync("dist/sitemap.xml", "utf8");
 const llms = readFileSync("dist/llms.txt", "utf8");
 
-if (!llms.includes("Unity") || !llms.includes("Live2D")) {
+if (!llms.includes("Unity") || !llms.includes("qq1417015340@gmail.com")) {
   throw new Error("dist/llms.txt is missing GEO profile facts");
+}
+
+if (!indexZh.includes("mailto:qq1417015340@gmail.com") || !indexZh.includes('id="contact"')) {
+  throw new Error("zh index is missing contact section");
 }
 
 for (const slug of postSlugs) {
