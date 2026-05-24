@@ -1,9 +1,11 @@
 import { initLocaleSwitcher, markCurrentLocale } from "./i18n/locale-switcher";
 import "./styles/main.css";
-import { initAuroraCanvas } from "./animations/aurora-canvas";
 import { initCursorGlow } from "./animations/cursor-glow";
+import { initHudClock } from "./animations/hud-clock";
 import { initMagneticElements } from "./animations/magnetic";
 import { initRevealObserver } from "./animations/reveal";
+import { initSaoField } from "./animations/sao-field";
+import { initTextScramble } from "./animations/text-scramble";
 import { initTiltCards } from "./animations/tilt-cards";
 
 function prefersReducedMotion(): boolean {
@@ -14,14 +16,16 @@ function boot(): void {
   markCurrentLocale();
   initLocaleSwitcher();
   initRevealObserver();
+  initHudClock();
 
   if (prefersReducedMotion()) {
     return;
   }
 
-  initAuroraCanvas();
+  initSaoField();
   initCursorGlow();
   initMagneticElements();
+  initTextScramble();
   initTiltCards();
 
   if (document.getElementById("live2d-stage")) {

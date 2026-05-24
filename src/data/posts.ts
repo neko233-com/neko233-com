@@ -19,49 +19,51 @@ export const posts: Post[] = [
     slug: "game-fullstack-notes",
     date: "2026-05-24",
     zh: {
-      title: "从游戏全栈到 Web：我实际在写什么",
-      description: "neko233（可乐鸡翅）聊 Unity + Go/Kotlin 游戏全栈经历，以及现在在 Web / Edge 上交付的东西。",
-      excerpt: "我现在还在维护的技术栈和仓库。",
+      title: "游戏 & Agent 两条线：我的技术栈",
+      description: "neko233（可乐鸡翅）介绍游戏线与 AI Agent 线的独立技术栈，含 HybridCLR、YooAsset、UniTask 等。",
+      excerpt: "游戏线与 Agent 线并行，附完整技术栈。",
       content: `
-      <p class="lede">我是 neko233（可乐鸡翅），全栈开发，现任技术负责人。</p>
+      <p class="lede">我是 neko233（可乐鸡翅），全栈开发工程师，现任技术负责人。</p>
       <p>
-        游戏行业那几年，主要做 <code>Unity</code> 客户端，和 <code>Go</code> + <code>Kotlin</code> 分布式后端。
-        也带过团队，写过一些工具库。
+        博客有两条独立主线：<strong>游戏</strong> 和 <strong>AI Agent</strong>。
+        游戏线以 Unity 为核心；Agent 线专注 LLM 工具链与业务落地。
       </p>
-      <p>
-        现在在 Web 侧继续做能上线的东西：静态站、Edge 部署、调度系统、配置迁移、证书自动化。
-        博客会同步 GitHub 仓库里的代码。
-      </p>
-      <h2>平时用到的技术</h2>
+      <h2>游戏线 · Unity 技术栈</h2>
       <ul>
-        <li>客户端：Unity、TypeScript 前端、Live2D 动效（这个站首页有）。</li>
-        <li>后端：Go、Kotlin、分布式任务调度、配置版本迁移。</li>
-        <li>交付：Vite 构建、Cloudflare Pages/Workers、无数据库静态站。</li>
+        <li>核心：Unity、HybridCLR、YooAsset、UniTask、URP</li>
+        <li>动画：Cinemachine、Animator、Spine 4.3、Magic Cloth、Timeline、DOTween</li>
+        <li>后端：Go / Kotlin、gRPC、Redis、MySQL、Kafka</li>
       </ul>
-      <p>下面「仓库」和「文章」都是我在维护的内容，可以直接看代码。</p>
+      <h2>Agent 线</h2>
+      <ul>
+        <li>LLM API、Tool Calling、RAG、MCP、Workflow 编排</li>
+        <li>工程化：权限、日志、Eval、Fallback</li>
+      </ul>
+      <p>首页「技术栈」区块有完整分类列表。</p>
     `,
     },
     en: {
-      title: "From game full-stack to web: what I actually ship",
-      description: "neko233 (Ke Le Ji Chi) on Unity + Go/Kotlin game work and what's in production on the web now.",
-      excerpt: "Not a career essay — the stacks and repos I still maintain.",
+      title: "Games & Agent: my two tech tracks",
+      description: "neko233 (Ke Le Ji Chi) on independent games and AI Agent stacks including HybridCLR, YooAsset, UniTask.",
+      excerpt: "Two parallel tracks with full stack breakdown.",
       content: `
-      <p class="lede">Ke Le Ji Chi. Full-stack. Current tech lead.</p>
+      <p class="lede">I'm neko233 (Ke Le Ji Chi), full-stack engineer and tech lead.</p>
       <p>
-        In games I spent years on <code>Unity</code> clients and <code>Go</code> + <code>Kotlin</code> distributed backends.
-        Led teams, ran production, shipped tooling.
+        Two independent tracks: <strong>Games</strong> and <strong>AI Agent</strong>.
+        Games center on Unity; Agent focuses on LLM tooling and business delivery.
       </p>
-      <p>
-        On the web I keep building things that go live: static sites, edge deploys, schedulers, config migration, cert automation.
-        This blog tracks real GitHub repos — no buzzword tours.
-      </p>
-      <h2>Hard skills I use</h2>
+      <h2>Games · Unity stack</h2>
       <ul>
-        <li>Client: Unity, TypeScript frontends, Live2D motion (yes, on this site's homepage).</li>
-        <li>Backend: Go, Kotlin, distributed job mesh, config migration.</li>
-        <li>Delivery: Vite builds, Cloudflare Pages/Workers, static sites without a database.</li>
+        <li>Core: Unity, HybridCLR, YooAsset, UniTask, URP</li>
+        <li>Animation: Cinemachine, Animator, Spine 4.3, Magic Cloth, Timeline, DOTween</li>
+        <li>Backend: Go / Kotlin, gRPC, Redis, MySQL, Kafka</li>
       </ul>
-      <p>Repos and posts below are things I actually maintain. Code is one click away.</p>
+      <h2>AI Agent</h2>
+      <ul>
+        <li>LLM APIs, tool calling, RAG, MCP, workflow orchestration</li>
+        <li>Engineering: permissions, logging, eval, fallbacks</li>
+      </ul>
+      <p>See the homepage stacks section for the full categorized list.</p>
     `,
     },
   },

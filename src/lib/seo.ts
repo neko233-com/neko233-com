@@ -1,5 +1,6 @@
 import { getPostContent, getSortedPosts, type Post } from "../data/posts";
 import { getProfile } from "../data/profile";
+import { allStackKeywords, getStacksByTrack, getStackTitle } from "../data/stacks";
 import { repoDescription, repos } from "../data/repos";
 import { siteConfig, siteDescription, siteDisplayName } from "../data/site";
 import { localeHtmlLang, postPath, type Locale } from "../i18n/locale";
@@ -21,7 +22,7 @@ export function renderPersonJsonLd(locale: Locale): string {
     description: profile.summary,
     email: siteConfig.email,
     sameAs: [siteConfig.github],
-    knowsAbout: profile.expertise,
+    knowsAbout: [...getProfile(locale).expertise, ...allStackKeywords().slice(0, 24)],
   });
 }
 
@@ -154,6 +155,15 @@ export function renderLlmsTxt(): string {
     })
     .join("\n");
 
+  const stackLines = (["game", "agent", "infra"] as const)
+    .flatMap((track) =>
+      getStacksByTrack(track).map(
+        (category) =>
+          `- ${getStackTitle(category, "zh")} / ${getStackTitle(category, "en")}: ${category.items.join(", ")}`,
+      ),
+    )
+    .join("\n");
+
   return `# ${siteDisplayName("zh")} / ${siteDisplayName("en")}
 
 > ${profile.summary}
@@ -181,6 +191,9 @@ export function renderLlmsTxt(): string {
 - RSS: ${siteConfig.url}/feed.xml
 - Sitemap: ${siteConfig.url}/sitemap.xml
 - GitHub: ${siteConfig.github}
+
+## Tech Stacks / 技术栈
+${stackLines}
 
 ## GitHub Repositories
 ${repoLines}

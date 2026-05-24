@@ -3,6 +3,7 @@ import { join } from "node:path";
 import { getPostContent, getSortedPosts, type Post } from "../data/posts";
 import { getProfile } from "../data/profile";
 import { repoDescription, repos } from "../data/repos";
+import { getStacksByTrack, getStackTitle, type StackTrack } from "../data/stacks";
 import {
   siteAuthor,
   siteConfig,
@@ -108,7 +109,7 @@ function layout(options: {
     <link rel="manifest" href="/site.webmanifest" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=M+PLUS+1p:wght@400;700;800&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;800&family=Share+Tech+Mono&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet" />
     ${assets.css ? `<link rel="stylesheet" href="${assetHref(assets.css)}" />` : ""}
     <script>${autoLocaleRedirectScript}</script>
     ${jsonLd.map((block) => `<script type="application/ld+json">${block}</script>`).join("\n    ")}
@@ -125,20 +126,37 @@ function renderLangSwitch(locale: Locale): string {
   return `<button class="lang-switch magnetic" type="button" data-locale-target="${other}" aria-label="${escapeHtml(t("langAria", locale))}">${escapeHtml(t("langSwitch", locale))}</button>`;
 }
 
-function renderSakuraLayer(): string {
-  return `<div class="sakura-layer" aria-hidden="true">${Array.from({ length: 16 }, (_, index) => {
-    const left = 4 + (index * 6.1) % 92;
-    const delay = (index * 0.85).toFixed(2);
-    const duration = 12 + (index % 5) * 2;
-    return `<span style="--petal-left:${left}%;--petal-delay:${delay}s;--petal-duration:${duration}s"></span>`;
-  }).join("")}</div>`;
+function renderHudChrome(): string {
+  return `<div class="hud-overlay" aria-hidden="true">
+      <div class="hud-scanlines"></div>
+      <div class="hud-vignette"></div>
+    </div>
+    <canvas id="sao-field" aria-hidden="true"></canvas>`;
+}
+
+function renderStackTrack(locale: Locale, track: StackTrack, accent: string): string {
+  return getStacksByTrack(track)
+    .map(
+      (category, index) => `
+          <article class="stack-card hud-panel ${accent}" data-reveal style="--reveal-delay:${index * 55}ms">
+            <h4>${escapeHtml(getStackTitle(category, locale))}</h4>
+            <ul class="stack-list">
+              ${category.items.map((item) => `<li>${escapeHtml(item)}</li>`).join("")}
+            </ul>
+          </article>`,
+    )
+    .join("");
 }
 
 function renderHeader(locale: Locale, active: "home" | "posts" | "post"): string {
   const base = homePath(locale);
-  return `<header class="site-header" data-reveal>
+  return `<header class="site-header hud-panel" data-reveal>
+      <div class="hud-status" aria-hidden="true">
+        <span>SYS://${siteConfig.name}</span>
+        <span data-hud-clock></span>
+      </div>
       <a class="brand magnetic" href="${base}">
-        <span class="brand-mark" aria-hidden="true">✦</span>
+        <span class="brand-mark" aria-hidden="true">◈</span>
         <span class="brand-stack">
           <span class="brand-name">${siteConfig.name}</span>
           <span class="brand-zh">${locale === "zh" ? siteConfig.nameZh : "Ke Le Ji Chi"}</span>
@@ -146,6 +164,7 @@ function renderHeader(locale: Locale, active: "home" | "posts" | "post"): string
       </a>
       <nav aria-label="Primary navigation">
         <a href="${base}#about">${t("navAbout", locale)}</a>
+        <a href="${base}#stacks">${t("navStacks", locale)}</a>
         <a href="${base}#posts"${active === "posts" ? ' aria-current="page"' : ""}>${t("navPosts", locale)}</a>
         <a href="${base}#repos">${t("navRepos", locale)}</a>
         <a href="${base}#contact">${t("navContact", locale)}</a>
@@ -159,7 +178,7 @@ function renderRepoRows(locale: Locale): string {
   return repos
     .map(
       (repo, index) => `
-          <article class="repo-row tilt-card" data-reveal data-tilt style="--reveal-delay:${index * 70}ms">
+          <article class="repo-row hud-panel tilt-card" data-reveal data-tilt style="--reveal-delay:${index * 70}ms">
             <div class="repo-meta">
               <h3><a href="${repo.url}" rel="noopener noreferrer">${escapeHtml(repo.name)}</a></h3>
               ${repo.language ? `<span class="repo-lang">${escapeHtml(repo.language)}</span>` : ""}
@@ -176,7 +195,7 @@ function renderPostRows(locale: Locale): string {
     .map((post, index) => {
       const content = getPostContent(post, locale);
       return `
-          <article class="post-row tilt-card" data-reveal data-tilt style="--reveal-delay:${index * 90}ms">
+          <article class="post-row hud-panel tilt-card" data-reveal data-tilt style="--reveal-delay:${index * 90}ms">
             <time datetime="${post.date}">${formatDisplayDate(post.date)}</time>
             <div>
               <h3><a href="${postPath(locale, post.slug)}">${escapeHtml(content.title)}</a></h3>
@@ -193,31 +212,28 @@ export function renderHomePage(locale: Locale, assets: AssetRefs): string {
   const base = homePath(locale);
 
   const body = `
-    ${renderSakuraLayer()}
+    ${renderHudChrome()}
     ${renderHeader(locale, "home")}
-    <canvas id="aurora-canvas" aria-hidden="true"></canvas>
     <div class="cursor-glow" aria-hidden="true"></div>
-    <div class="anime-blob anime-blob-a" aria-hidden="true"></div>
-    <div class="anime-blob anime-blob-b" aria-hidden="true"></div>
 
     <main>
       <section class="hero" aria-labelledby="hero-title">
         <div class="hero-layout">
-          <div class="hero-copy panel-card" data-reveal>
+          <div class="hero-copy hud-panel" data-reveal>
             <p class="eyebrow">${t("heroEyebrow", locale)}</p>
-            <h1 id="hero-title">${escapeHtml(siteConfig.name)}</h1>
+            <h1 id="hero-title" data-scramble="${escapeHtml(siteConfig.name)}">${escapeHtml(siteConfig.name)}</h1>
             <p class="hero-subname">${locale === "zh" ? siteConfig.nameZh : "Ke Le Ji Chi"}</p>
             <p class="hero-role">${escapeHtml(profile.headline)}</p>
             <p class="hero-summary">${escapeHtml(profile.summary)}</p>
             <div class="hero-actions">
-              <a class="button primary magnetic" href="${base}#posts">${t("heroCtaPosts", locale)}</a>
-              <a class="button secondary magnetic" href="mailto:${siteConfig.email}">${t("heroCtaContact", locale)}</a>
-              <a class="button ghost magnetic" href="${siteConfig.github}">${t("heroCtaGithub", locale)}</a>
+              <a class="button primary magnetic" href="${base}#stacks">${t("heroCtaStacks", locale)}</a>
+              <a class="button secondary magnetic" href="${base}#posts">${t("heroCtaPosts", locale)}</a>
+              <a class="button ghost magnetic" href="mailto:${siteConfig.email}">${t("heroCtaContact", locale)}</a>
             </div>
           </div>
           <div class="hero-stage" data-reveal style="--reveal-delay:120ms">
-            <div class="hero-stage-frame panel-card">
-              <span class="hero-stage-tag">Live2D</span>
+            <div class="hero-stage-frame hud-panel">
+              <span class="hero-stage-tag">AVATAR // Live2D</span>
               <div id="live2d-stage" class="live2d-stage" aria-label="${locale === "zh" ? "Live2D 角色展示" : "Live2D character display"}"></div>
             </div>
           </div>
@@ -230,21 +246,39 @@ export function renderHomePage(locale: Locale, assets: AssetRefs): string {
           <h2 id="about-title">${t("aboutTitle", locale)}</h2>
         </div>
         <div class="about-grid">
-          <article class="about-card panel-card" data-reveal>
+          <article class="about-card hud-panel" data-reveal>
             <h3>${t("doingNowTitle", locale)}</h3>
             <p>${escapeHtml(profile.doingNow)}</p>
           </article>
-          <article class="about-card panel-card" data-reveal style="--reveal-delay:90ms">
+          <article class="about-card hud-panel" data-reveal style="--reveal-delay:90ms">
             <h3>${t("gameTitle", locale)}</h3>
             <p>${escapeHtml(profile.gameDirection)}</p>
           </article>
-          <article class="about-card panel-card" data-reveal style="--reveal-delay:180ms">
+          <article class="about-card hud-panel" data-reveal style="--reveal-delay:180ms">
             <h3>${t("agentTitle", locale)}</h3>
             <p>${escapeHtml(profile.agentDirection)}</p>
           </article>
         </div>
-        <div class="tag-strip" data-reveal style="--reveal-delay:240ms">
-          ${profile.expertise.map((item) => `<span>${escapeHtml(item)}</span>`).join("")}
+      </section>
+
+      <section class="section stacks-section" id="stacks" aria-labelledby="stacks-title">
+        <div class="section-heading" data-reveal>
+          <p class="eyebrow">${t("stacksEyebrow", locale)}</p>
+          <h2 id="stacks-title">${t("stacksTitle", locale)}</h2>
+        </div>
+        <div class="stack-tracks">
+          <div class="stack-track stack-track--game" data-reveal>
+            <h3 class="stack-track-title">${t("gameStackTitle", locale)}</h3>
+            <div class="stack-grid">${renderStackTrack(locale, "game", "stack-accent-game")}</div>
+          </div>
+          <div class="stack-track stack-track--agent" data-reveal style="--reveal-delay:100ms">
+            <h3 class="stack-track-title">${t("agentStackTitle", locale)}</h3>
+            <div class="stack-grid">${renderStackTrack(locale, "agent", "stack-accent-agent")}</div>
+          </div>
+        </div>
+        <div class="stack-track stack-track--infra" data-reveal style="--reveal-delay:180ms">
+          <h3 class="stack-track-title">${t("infraStackTitle", locale)}</h3>
+          <div class="stack-grid stack-grid--infra">${renderStackTrack(locale, "infra", "stack-accent-infra")}</div>
         </div>
       </section>
 
@@ -265,7 +299,7 @@ export function renderHomePage(locale: Locale, assets: AssetRefs): string {
       </section>
 
       <section class="section contact-section" id="contact" aria-labelledby="contact-title">
-        <div class="contact-card panel-card" data-reveal>
+        <div class="contact-card hud-panel" data-reveal>
           <p class="eyebrow">${t("contactEyebrow", locale)}</p>
           <h2 id="contact-title">${t("contactTitle", locale)}</h2>
           <p class="contact-body">${escapeHtml(t("contactBody", locale))}</p>
@@ -306,9 +340,9 @@ export function renderHomePage(locale: Locale, assets: AssetRefs): string {
 export function renderPostPage(post: Post, locale: Locale, assets: AssetRefs): string {
   const content = getPostContent(post, locale);
   const body = `
-    ${renderSakuraLayer()}
+    ${renderHudChrome()}
     ${renderHeader(locale, "post")}
-    <canvas id="aurora-canvas" aria-hidden="true" data-subtle></canvas>
+    <canvas id="sao-field" aria-hidden="true" data-subtle></canvas>
 
     <main class="section article">
       <article itemscope itemtype="https://schema.org/BlogPosting">
@@ -334,10 +368,10 @@ export function renderPostPage(post: Post, locale: Locale, assets: AssetRefs): s
 
 export function render404Page(locale: Locale, assets: AssetRefs): string {
   const body = `
-    ${renderSakuraLayer()}
+    ${renderHudChrome()}
     ${renderHeader(locale, "home")}
     <main class="section article not-found">
-      <canvas id="aurora-canvas" aria-hidden="true" data-subtle></canvas>
+      <canvas id="sao-field" aria-hidden="true" data-subtle></canvas>
       <section data-reveal>
         <p class="eyebrow">404</p>
         <h1 data-scramble="${escapeHtml(t("notFoundTitle", locale))}">${escapeHtml(t("notFoundTitle", locale))}</h1>

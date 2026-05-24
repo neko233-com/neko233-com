@@ -64,6 +64,9 @@ for (const [label, html, expected] of [
   if (!html.includes('id="live2d-stage"')) {
     throw new Error(`${label} is missing Live2D stage container`);
   }
+  if (!html.includes('id="stacks"') || !html.includes("HybridCLR")) {
+    throw new Error(`${label} is missing stacks section`);
+  }
 }
 
 const localRefs = [...indexZh.matchAll(/(?:href|src)="(\/[^"#?]+)"/g)].map((match) => match[1]);
@@ -81,7 +84,7 @@ const feed = readFileSync("dist/feed.xml", "utf8");
 const sitemap = readFileSync("dist/sitemap.xml", "utf8");
 const llms = readFileSync("dist/llms.txt", "utf8");
 
-if (!llms.includes("游戏") || !llms.includes("AI Agent") || !llms.includes("qq1417015340@gmail.com")) {
+if (!llms.includes("HybridCLR") || !llms.includes("AI Agent") || !llms.includes("qq1417015340@gmail.com")) {
   throw new Error("dist/llms.txt is missing GEO profile facts");
 }
 

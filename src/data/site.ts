@@ -7,7 +7,7 @@ export const siteConfig = {
   github: "https://github.com/neko233-com",
   githubProfile: "https://github.com/neko233-com/neko233-com",
   email: "qq1417015340@gmail.com",
-  themeColor: "#161025",
+  themeColor: "#040c1c",
 } as const;
 
 const localized = {
