@@ -26,6 +26,8 @@ repo role     GitHub profile README + Cloudflare blog source
 > Achievement rule: enable private contributions in GitHub profile settings to show the extra achievements unlocked by private contribution activity.
 >
 > Blog rule: the Cloudflare Pages / Workers static blog source lives in this same repository. See [blog.md](./blog.md) for deployment rules.
+>
+> Worker rule: Cloudflare Workers deploys through `src/worker.js`, `package.json`, and `wrangler.toml`; the static blog assets are in `site/`.
 
 <div align="center">
 

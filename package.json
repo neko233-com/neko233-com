@@ -1,0 +1,16 @@
+{
+  "name": "neko233-com",
+  "version": "0.1.0",
+  "private": true,
+  "description": "GitHub profile repository and Cloudflare static blog for neko233-com.",
+  "type": "module",
+  "scripts": {
+    "build": "node scripts/verify-site.mjs",
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "verify": "node scripts/verify-site.mjs"
+  },
+  "devDependencies": {
+    "wrangler": "^4.18.0"
+  }
+}

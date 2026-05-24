@@ -23,6 +23,8 @@ site/robots.txt                   Crawler rules
 site/404.html                     Static not-found page
 site/site.webmanifest             Web app metadata
 site/_headers                     Cloudflare Pages headers
+src/worker.js                     Cloudflare Worker entry
+package.json                      Cloudflare build/deploy scripts
 wrangler.toml                     Cloudflare Workers static assets config
 .github/workflows/                GitHub profile animation automation
 assets/                           README visual assets
@@ -68,6 +70,17 @@ site/feed.xml      RSS feed
 
 Use this mode when you want to serve the same static files through Workers static assets.
 
+For the Cloudflare Dashboard screen shown during `Create Worker`, use:
+
+```txt
+Project name      neko233-com
+Build command     npm run build
+Deploy command    npx wrangler deploy
+Root directory    /
+```
+
+If Cloudflare asks whether the project uses third-party build tooling, keep it enabled. This repository has a `package.json` so Cloudflare can install Wrangler and run the deployment command reliably.
+
 Install Wrangler locally:
 
 ```bash
@@ -92,7 +105,13 @@ Deploy:
 wrangler deploy
 ```
 
-The Worker reads static assets from `site/` using `wrangler.toml`. Missing routes use the static `404.html` page because `not_found_handling` is set to `404-page`.
+The Worker entry is `src/worker.js`. It serves static assets from `site/` through the `ASSETS` binding configured in `wrangler.toml`. Missing routes use the static `404.html` page because `not_found_handling` is set to `404-page`.
+
+The health check route is:
+
+```txt
+/health
+```
 
 ## Writing Posts
 
