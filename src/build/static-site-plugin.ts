@@ -1,7 +1,7 @@
 import type { Plugin } from "vite";
 import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
-import { getSortedPosts } from "../data/posts";
+import { getPostBySlug, getSortedPosts } from "../data/posts";
 import { siteConfig } from "../data/site";
 import { formatDisplayDate, formatRssDate } from "../lib/dates";
 import { escapeHtml } from "../lib/html";
@@ -9,6 +9,18 @@ import { escapeHtml } from "../lib/html";
 interface AssetRefs {
   css: string;
   js: string;
+}
+
+const devAssets: AssetRefs = {
+  css: "",
+  js: "/src/main.ts",
+};
+
+function assetHref(path: string): string {
+  if (!path) {
+    return "";
+  }
+  return path.startsWith("/") ? path : `/${path}`;
 }
 
 function readManifest(distDir: string): AssetRefs {
@@ -63,11 +75,11 @@ function layout(options: {
     <link rel="alternate" type="application/rss+xml" title="${escapeHtml(siteConfig.title)} RSS" href="/feed.xml" />
     <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
     <link rel="manifest" href="/site.webmanifest" />
-    ${assets.css ? `<link rel="stylesheet" href="/${assets.css}" />` : ""}
+    ${assets.css ? `<link rel="stylesheet" href="${assetHref(assets.css)}" />` : ""}
   </head>
   <body>
     ${body}
-    <script type="module" src="/${assets.js}"></script>
+    <script type="module" src="${assetHref(assets.js)}"></script>
   </body>
 </html>`;
 }
@@ -283,7 +295,47 @@ function renderSitemap(): string {
 export function staticSitePlugin(): Plugin {
   return {
     name: "neko233-static-site",
-    apply: "build",
+    configureServer(server) {
+      server.middlewares.use((req, res, next) => {
+        const pathname = req.url?.split("?")[0] ?? "";
+
+        if (pathname === "/" || pathname === "/index.html") {
+          res.setHeader("Content-Type", "text/html; charset=utf-8");
+          res.end(renderHomePage(devAssets));
+          return;
+        }
+
+        const postMatch = pathname.match(/^\/posts\/([^/]+)\/?$/);
+        if (postMatch) {
+          const post = getPostBySlug(postMatch[1]);
+          if (post) {
+            res.setHeader("Content-Type", "text/html; charset=utf-8");
+            res.end(renderPostPage(post, devAssets));
+            return;
+          }
+        }
+
+        if (pathname === "/404.html") {
+          res.setHeader("Content-Type", "text/html; charset=utf-8");
+          res.end(render404Page(devAssets));
+          return;
+        }
+
+        if (pathname === "/feed.xml") {
+          res.setHeader("Content-Type", "application/xml; charset=utf-8");
+          res.end(renderFeed());
+          return;
+        }
+
+        if (pathname === "/sitemap.xml") {
+          res.setHeader("Content-Type", "application/xml; charset=utf-8");
+          res.end(renderSitemap());
+          return;
+        }
+
+        next();
+      });
+    },
     closeBundle() {
       const distDir = join(process.cwd(), "dist");
       const assets = readManifest(distDir);

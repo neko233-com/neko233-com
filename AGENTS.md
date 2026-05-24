@@ -72,16 +72,18 @@ npm run worker:deploy
 Before pushing, run:
 
 ```bash
-npm run build
-npm run verify
-npx wrangler deploy --dry-run
+npm run validate
 ```
+
+`validate` runs build, verify, typecheck, and `wrangler deploy --dry-run`.
 
 When Pages-specific deployment is being changed, also run:
 
 ```bash
-npx wrangler pages deploy dist --project-name neko233-com --dry-run
+npm run pages:deploy
 ```
+
+Note: current Wrangler versions no longer accept `--dry-run` for `wrangler pages deploy`.
 
 If a command cannot run because it requires authentication or Cloudflare account access, document the exact limitation in the final response.
 

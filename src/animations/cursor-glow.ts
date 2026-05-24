@@ -1,13 +1,4 @@
-export function initCursorGlow(): void {
-  if (!window.matchMedia("(pointer: fine)").matches) {
-    return;
-  }
-
-  const glow = document.querySelector(".cursor-glow") as HTMLElement | null;
-  if (!glow) {
-    return;
-  }
-
+function startCursorGlow(glow: HTMLElement): void {
   let targetX = window.innerWidth * 0.5;
   let targetY = window.innerHeight * 0.5;
   let currentX = targetX;
@@ -39,4 +30,17 @@ export function initCursorGlow(): void {
       tick();
     }
   });
+}
+
+export function initCursorGlow(): void {
+  if (!window.matchMedia("(pointer: fine)").matches) {
+    return;
+  }
+
+  const glowElement = document.querySelector(".cursor-glow");
+  if (!(glowElement instanceof HTMLElement)) {
+    return;
+  }
+
+  startCursorGlow(glowElement);
 }

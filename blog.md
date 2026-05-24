@@ -69,8 +69,10 @@ npm install
 npm run dev
 npm run build
 npm run verify
+npm run typecheck
+npm run validate
 npm run preview
-npx wrangler pages deploy dist --project-name neko233-com
+npm run pages:deploy
 ```
 
 ## Cloudflare Workers Deployment

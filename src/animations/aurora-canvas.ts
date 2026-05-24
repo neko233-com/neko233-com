@@ -10,17 +10,7 @@ interface Particle {
 const MAX_PARTICLES = 120;
 const LINK_DISTANCE = 140;
 
-export function initAuroraCanvas(): void {
-  const canvas = document.getElementById("aurora-canvas") as HTMLCanvasElement | null;
-  if (!canvas) {
-    return;
-  }
-
-  const ctx = canvas.getContext("2d");
-  if (!ctx) {
-    return;
-  }
-
+function startAurora(canvas: HTMLCanvasElement, context: CanvasRenderingContext2D): void {
   const subtle = canvas.hasAttribute("data-subtle");
   const pointer = { x: window.innerWidth * 0.5, y: window.innerHeight * 0.35 };
   let width = 0;
@@ -37,7 +27,7 @@ export function initAuroraCanvas(): void {
     canvas.height = Math.floor(height * devicePixelRatio);
     canvas.style.width = `${width}px`;
     canvas.style.height = `${height}px`;
-    ctx.setTransform(devicePixelRatio, 0, 0, devicePixelRatio, 0, 0);
+    context.setTransform(devicePixelRatio, 0, 0, devicePixelRatio, 0, 0);
   }
 
   function seedParticles(): void {
@@ -56,15 +46,15 @@ export function initAuroraCanvas(): void {
   }
 
   function drawBackground(): void {
-    const gradient = ctx.createLinearGradient(0, 0, width, height);
+    const gradient = context.createLinearGradient(0, 0, width, height);
     gradient.addColorStop(0, "rgba(5, 7, 13, 0.92)");
     gradient.addColorStop(0.45, "rgba(7, 16, 29, 0.88)");
     gradient.addColorStop(1, "rgba(15, 21, 32, 0.9)");
-    ctx.fillStyle = gradient;
-    ctx.fillRect(0, 0, width, height);
+    context.fillStyle = gradient;
+    context.fillRect(0, 0, width, height);
 
     const pulse = 0.5 + Math.sin(frame * 0.008) * 0.5;
-    const glow = ctx.createRadialGradient(
+    const glow = context.createRadialGradient(
       pointer.x,
       pointer.y,
       0,
@@ -75,8 +65,8 @@ export function initAuroraCanvas(): void {
     glow.addColorStop(0, `rgba(0, 231, 255, ${subtle ? 0.04 : 0.08 + pulse * 0.04})`);
     glow.addColorStop(0.55, "rgba(255, 79, 216, 0.03)");
     glow.addColorStop(1, "rgba(5, 7, 13, 0)");
-    ctx.fillStyle = glow;
-    ctx.fillRect(0, 0, width, height);
+    context.fillStyle = glow;
+    context.fillRect(0, 0, width, height);
   }
 
   function step(): void {
@@ -112,28 +102,23 @@ export function initAuroraCanvas(): void {
           continue;
         }
         const alpha = (1 - distance / LINK_DISTANCE) * (subtle ? 0.18 : 0.34);
-        ctx.strokeStyle = `hsla(${(a.hue + b.hue) * 0.5}, 90%, 68%, ${alpha})`;
-        ctx.lineWidth = 1;
-        ctx.beginPath();
-        ctx.moveTo(a.x, a.y);
-        ctx.lineTo(b.x, b.y);
-        ctx.stroke();
+        context.strokeStyle = `hsla(${(a.hue + b.hue) * 0.5}, 90%, 68%, ${alpha})`;
+        context.lineWidth = 1;
+        context.beginPath();
+        context.moveTo(a.x, a.y);
+        context.lineTo(b.x, b.y);
+        context.stroke();
       }
     }
 
     for (const particle of particles) {
-      ctx.beginPath();
-      ctx.fillStyle = `hsla(${particle.hue + Math.sin(frame * 0.02 + particle.x) * 18}, 95%, 72%, 0.85)`;
-      ctx.arc(particle.x, particle.y, particle.radius, 0, Math.PI * 2);
-      ctx.fill();
+      context.beginPath();
+      context.fillStyle = `hsla(${particle.hue + Math.sin(frame * 0.02 + particle.x) * 18}, 95%, 72%, 0.85)`;
+      context.arc(particle.x, particle.y, particle.radius, 0, Math.PI * 2);
+      context.fill();
     }
 
     raf = window.requestAnimationFrame(step);
-  }
-
-  function onPointerMove(event: PointerEvent): void {
-    pointer.x = event.clientX;
-    pointer.y = event.clientY;
   }
 
   resize();
@@ -144,7 +129,10 @@ export function initAuroraCanvas(): void {
     resize();
     seedParticles();
   });
-  window.addEventListener("pointermove", onPointerMove);
+  window.addEventListener("pointermove", (event) => {
+    pointer.x = event.clientX;
+    pointer.y = event.clientY;
+  });
 
   document.addEventListener(
     "visibilitychange",
@@ -157,4 +145,18 @@ export function initAuroraCanvas(): void {
     },
     { passive: true },
   );
+}
+
+export function initAuroraCanvas(): void {
+  const canvasElement = document.getElementById("aurora-canvas");
+  if (!(canvasElement instanceof HTMLCanvasElement)) {
+    return;
+  }
+
+  const context = canvasElement.getContext("2d");
+  if (!context) {
+    return;
+  }
+
+  startAurora(canvasElement, context);
 }

@@ -65,4 +65,14 @@ if (!existsSync(manifestPath)) {
   throw new Error("Missing Vite build manifest at dist/.vite/manifest.json");
 }
 
+const health = readFileSync("functions/health.js", "utf8");
+if (!health.includes('"dist"')) {
+  throw new Error("functions/health.js must report assets: dist");
+}
+
+const workerHealth = readFileSync("worker/worker.ts", "utf8");
+if (!workerHealth.includes('"dist"')) {
+  throw new Error("worker/worker.ts must report assets: dist");
+}
+
 console.log("dist verification passed");

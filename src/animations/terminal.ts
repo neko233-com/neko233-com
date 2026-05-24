@@ -1,9 +1,4 @@
-export function initTerminalTypewriter(): void {
-  const terminal = document.querySelector<HTMLElement>("[data-terminal]");
-  if (!terminal) {
-    return;
-  }
-
+function startTerminalTypewriter(terminal: HTMLElement): void {
   const lines = [...terminal.querySelectorAll<HTMLElement>("p")];
   terminal.classList.add("is-typing");
 
@@ -31,4 +26,13 @@ export function initTerminalTypewriter(): void {
   }
 
   window.setTimeout(() => typeLine(lines[0]), 500);
+}
+
+export function initTerminalTypewriter(): void {
+  const terminalElement = document.querySelector("[data-terminal]");
+  if (!(terminalElement instanceof HTMLElement)) {
+    return;
+  }
+
+  startTerminalTypewriter(terminalElement);
 }
