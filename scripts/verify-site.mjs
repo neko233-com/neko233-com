@@ -113,4 +113,19 @@ for (const file of ["functions/health.js", "worker/worker.ts"]) {
   }
 }
 
+const headers = readFileSync("dist/_headers", "utf8");
+if (headers.includes("*/")) {
+  throw new Error('dist/_headers must not contain C-style comment closers ("*/")');
+}
+
+for (const [index, line] of headers.split(/\r?\n/).entries()) {
+  const trimmed = line.trim();
+  if (!trimmed || trimmed.endsWith("/*") || (trimmed.startsWith("/") && trimmed.includes("*"))) {
+    continue;
+  }
+  if (!/^[A-Za-z0-9!#$&'*+.^_`|~-]+:\s/.test(trimmed)) {
+    throw new Error(`dist/_headers line ${index + 1} is not a valid header pair: ${line}`);
+  }
+}
+
 console.log("dist verification passed");
