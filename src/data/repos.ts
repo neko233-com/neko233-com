@@ -12,8 +12,8 @@ export const repos: RepoItem[] = [
   {
     name: "neko233-com",
     description: {
-      zh: "GitHub 特殊名片 + Cloudflare Pages 双语博客（Vite 8 + TypeScript）。",
-      en: "GitHub profile card + Cloudflare Pages bilingual blog (Vite 8 + TypeScript).",
+      zh: "就是这个站。GitHub 名片 + 博客，一个仓库搞定。",
+      en: "This site. GitHub profile + blog, one repo.",
     },
     url: "https://github.com/neko233-com/neko233-com",
     language: "TypeScript",
@@ -22,8 +22,8 @@ export const repos: RepoItem[] = [
   {
     name: "agent-skill-paper-reference",
     description: {
-      zh: "论文检索、引用核对的工作流工具，给研究型开发用。",
-      en: "Paper search, citation, and verification workflow tooling.",
+      zh: "查论文、对引用的 Agent 小工具，研究向开发用的。",
+      en: "Agent tool for paper search and citation checks.",
     },
     url: "https://github.com/neko233-com/agent-skill-paper-reference",
     language: "TypeScript",
@@ -32,8 +32,8 @@ export const repos: RepoItem[] = [
   {
     name: "SchedulerMeshServer233",
     description: {
-      zh: "分布式调度任务 Mesh 系统，面向大规模任务编排与执行。",
-      en: "Distributed scheduling mesh for large-scale job orchestration.",
+      zh: "分布式任务调度，游戏后端那套东西延伸出来的。",
+      en: "Distributed job scheduling — grew out of game backend work.",
     },
     url: "https://github.com/neko233-com/SchedulerMeshServer233",
     language: "HTML",
@@ -42,8 +42,8 @@ export const repos: RepoItem[] = [
   {
     name: "config-migrate-go",
     description: {
-      zh: "Go 配置升级迁移库，用于服务端版本演进时的配置平滑迁移。",
-      en: "Go config migration library for server version upgrades.",
+      zh: "Go 服务升级时迁移配置文件，版本迭代用。",
+      en: "Migrate Go configs when server versions bump.",
     },
     url: "https://github.com/neko233-com/config-migrate-go",
     language: "Go",
@@ -51,8 +51,8 @@ export const repos: RepoItem[] = [
   {
     name: "acme-go",
     description: {
-      zh: "使用 Go 编写的 ACME 证书工具，面向自动化部署场景。",
-      en: "Go ACME certificate utility for automated deployment.",
+      zh: "Go 写的 ACME 证书工具，自动化部署证书用。",
+      en: "Go ACME cert tool for automated deploys.",
     },
     url: "https://github.com/neko233-com/acme-go",
     language: "Go",
@@ -60,8 +60,8 @@ export const repos: RepoItem[] = [
   {
     name: "config233-go",
     description: {
-      zh: "Go 配置管理相关实验与工具集合。",
-      en: "Go configuration tooling experiments and utilities.",
+      zh: "Go 配置管理的一些实验和工具。",
+      en: "Go config tooling experiments.",
     },
     url: "https://github.com/neko233-com/config233-go",
     language: "Go",
@@ -69,16 +69,16 @@ export const repos: RepoItem[] = [
   {
     name: "ssh-gui-by-neko233",
     description: {
-      zh: "跨平台 SSH GUI 工具，面向日常运维与连接管理。",
-      en: "Cross-platform SSH GUI for daily ops and connection management.",
+      zh: "自己用的 SSH GUI，日常连服务器方便点。",
+      en: "Personal SSH GUI for daily server connections.",
     },
     url: "https://github.com/neko233-com/ssh-gui-by-neko233",
   },
   {
     name: "astro-blog-starter-template",
     description: {
-      zh: "Astro 博客 starter 模板，用于快速搭建静态内容站点。",
-      en: "Astro blog starter template for static content sites.",
+      zh: "Astro 博客模板，搭静态站用的 starter。",
+      en: "Astro blog starter for static sites.",
     },
     url: "https://github.com/neko233-com/astro-blog-starter-template",
     language: "Astro",

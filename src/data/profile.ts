@@ -4,17 +4,17 @@ const profileCopy = {
   zh: {
     role: "全栈开发工程师",
     title: "技术负责人",
-    headline: "游戏 & AI Agent · 两个独立方向",
+    headline: "做游戏，也做 Agent",
     summary:
-      "你好，我是 neko233（可乐鸡翅），全栈开发工程师、技术负责人。博客记录项目实践与开发笔记，主线是游戏和 AI Agent，两条线独立并行。",
+      "我是 neko233，大家都叫我可乐鸡翅。写 Unity，也写 Go/Kotlin 后端，现在是技术负责人。这个博客记项目、踩坑，还有 GitHub 上开源的东西。",
     doingNow:
-      "一边做 Unity 游戏客户端与 Go/Kotlin 后端相关项目，一边做 AI Agent 工具链与业务落地。仓库和文章都会按「游戏 / Agent」分开更新。",
+      "手上同时进行几件事：Unity 客户端和 Go/Kotlin 后端是一条线；LLM、Agent 工具是另一条。仓库和文章分开写，免得混在一起。",
     gameDirection:
-      "游戏线：Unity 客户端为主，热更新走 HybridCLR，资源管理用 YooAsset，异步流程用 UniTask。动画侧用 Cinemachine、Animator、Spine 4.3、Magic Cloth 等；服务端是 Go/Kotlin 分布式架构。",
+      "Unity 这条线比较熟：HybridCLR 热更、YooAsset 管资源、UniTask 跑异步。动画常用 Cinemachine、Spine 4.3、Magic Cloth。服务端在游戏公司做过 Go/Kotlin 分布式，该上的都上过线。",
     agentDirection:
-      "Agent 线：LLM + Tool Calling + 流程编排，把 Agent 能力嵌进真实业务流程。强调工程化——权限、日志、Eval、回退策略，而不是 Demo。与游戏线分开维护。",
+      "Agent 是另一条线：接 LLM、写 Tool、把流程串起来，要能进业务，不是 Demo 演示完就结束。和游戏项目分开维护。",
     previousExperience:
-      "游戏行业多年：Unity 全栈 → 技术负责人，负责客户端、分布式后端与团队交付。",
+      "在游戏行业做了很多年，从 Unity 客户端写到分布式后端，后来带团队做技术负责人。",
     expertise: [
       "HybridCLR",
       "YooAsset",
@@ -42,17 +42,17 @@ const profileCopy = {
   en: {
     role: "Full-stack Engineer",
     title: "Tech Lead",
-    headline: "Games & AI Agent · two separate tracks",
+    headline: "Games on one side, Agent on the other",
     summary:
-      "Hi, I'm neko233 (Ke Le Ji Chi), full-stack engineer and tech lead. This blog documents practice notes across two independent tracks: games and AI Agent.",
+      "I'm neko233 (Ke Le Ji Chi). I write Unity clients and Go/Kotlin backends, currently tech lead. This blog is project notes, war stories, and GitHub repos.",
     doingNow:
-      "Unity game clients and Go/Kotlin backends on one side; AI Agent tooling and business delivery on the other. Repos and posts are split by track.",
+      "Unity clients + Go/Kotlin backends on one track; LLM and Agent tooling on another. Repos and posts stay separated so they don't mix.",
     gameDirection:
-      "Games: Unity clients with HybridCLR hot-update, YooAsset resources, UniTask async. Animation stack includes Cinemachine, Animator, Spine 4.3, Magic Cloth. Server side: Go/Kotlin distributed systems.",
+      "Games: HybridCLR hot-update, YooAsset, UniTask. Animation with Cinemachine, Spine 4.3, Magic Cloth. Server side is Go/Kotlin distributed — shipped to production in the game industry.",
     agentDirection:
-      "AI Agent: LLMs, tool calling, and workflow orchestration embedded in real business flows — with permissions, logging, eval, and fallbacks. Maintained separately from the games track.",
+      "Agent track: hook up LLMs, write tools, wire workflows that actually land in business systems — not demo-only. Kept separate from game projects.",
     previousExperience:
-      "Years in games: Unity full-stack to tech lead — clients, distributed backends, and team delivery.",
+      "Many years in games — Unity client to distributed backend, later tech lead.",
     expertise: [
       "HybridCLR",
       "YooAsset",

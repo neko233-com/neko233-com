@@ -233,7 +233,7 @@ export function renderHomePage(locale: Locale, assets: AssetRefs): string {
           </div>
           <div class="hero-stage" data-reveal style="--reveal-delay:120ms">
             <div class="hero-stage-frame hud-panel">
-              <span class="hero-stage-tag">AVATAR // Live2D</span>
+              <span class="hero-stage-tag">Live2D</span>
               <div id="live2d-stage" class="live2d-stage" aria-label="${locale === "zh" ? "Live2D 角色展示" : "Live2D character display"}"></div>
             </div>
           </div>

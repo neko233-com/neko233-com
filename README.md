@@ -6,9 +6,9 @@
 full-stack engineer · tech lead · [neko233.com](https://neko233.com)
 
 ```txt
-now   web 全栈 · edge 部署
-was   unity · go · kotlin · 分布式后端
-ship  工具 · 系统 · 能进生产的代码
+now   游戏 · AI Agent
+was   unity · go · kotlin · 分布式
+ship  客户端 · 后端 · agent 工具
 ```
 
 <br />
