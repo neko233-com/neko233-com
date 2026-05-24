@@ -29,6 +29,10 @@ function boot(): void {
   initTextScramble();
   initTiltCards();
   initTerminalTypewriter();
+
+  if (document.getElementById("live2d-stage")) {
+    void import("./animations/live2d-stage").then((module) => module.initLive2dStage());
+  }
 }
 
 if (document.readyState === "loading") {

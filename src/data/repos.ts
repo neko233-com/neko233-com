@@ -22,8 +22,8 @@ export const repos: RepoItem[] = [
   {
     name: "agent-skill-paper-reference",
     description: {
-      zh: "Agent Skill：论文搜索、引用与反复核实，服务 AI 研究型工作流。",
-      en: "Agent skill for paper search, citation, and verification loops.",
+      zh: "论文检索、引用核对的工作流工具，给研究型开发用。",
+      en: "Paper search, citation, and verification workflow tooling.",
     },
     url: "https://github.com/neko233-com/agent-skill-paper-reference",
     language: "TypeScript",

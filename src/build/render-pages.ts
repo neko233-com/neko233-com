@@ -193,21 +193,23 @@ export function renderHomePage(locale: Locale, assets: AssetRefs): string {
         <div class="hero-grid" aria-hidden="true" data-grid-warp>
           ${Array.from({ length: 12 }, () => "<span></span>").join("")}
         </div>
-        <div class="orbital" aria-hidden="true">
-          <span class="orbit orbit-a"></span>
-          <span class="orbit orbit-b"></span>
-          <span class="orbit orbit-c"></span>
-          <span class="orbit-core"></span>
-        </div>
-        <div class="hero-copy" data-reveal>
-          <p class="eyebrow">${t("heroEyebrow", locale)}</p>
-          <h1 id="hero-title" data-scramble="${escapeHtml(siteConfig.name)}">${escapeHtml(siteConfig.name)}</h1>
-          <p class="hero-subname" data-reveal>${locale === "zh" ? siteConfig.nameZh : "Ke Le Ji Chi"}</p>
-          <p class="lede">${escapeHtml(profile.headline)}</p>
-          <p class="hero-summary">${escapeHtml(profile.summary)}</p>
-          <div class="hero-actions">
-            <a class="button primary magnetic" href="${base}#posts">${t("heroCtaPosts", locale)}</a>
-            <a class="button secondary magnetic" href="${siteConfig.github}">${t("heroCtaGithub", locale)}</a>
+        <div class="hero-layout">
+          <div class="hero-copy" data-reveal>
+            <p class="eyebrow">${t("heroEyebrow", locale)}</p>
+            <h1 id="hero-title" data-scramble="${escapeHtml(siteConfig.name)}">${escapeHtml(siteConfig.name)}</h1>
+            <p class="hero-subname" data-reveal>${locale === "zh" ? siteConfig.nameZh : "Ke Le Ji Chi"}</p>
+            <p class="lede">${escapeHtml(profile.headline)}</p>
+            <p class="hero-summary">${escapeHtml(profile.summary)}</p>
+            <div class="hero-actions">
+              <a class="button primary magnetic" href="${base}#posts">${t("heroCtaPosts", locale)}</a>
+              <a class="button secondary magnetic" href="${siteConfig.github}">${t("heroCtaGithub", locale)}</a>
+            </div>
+          </div>
+          <div class="hero-stage" data-reveal style="--reveal-delay:120ms">
+            <div class="hero-stage-frame">
+              <span class="hero-stage-tag">${locale === "zh" ? "Live2D · 看板娘在线" : "Live2D · on stage"}</span>
+              <div id="live2d-stage" class="live2d-stage" aria-label="${locale === "zh" ? "Live2D 角色展示" : "Live2D character display"}"></div>
+            </div>
           </div>
         </div>
       </section>

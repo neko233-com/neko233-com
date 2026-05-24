@@ -2,7 +2,7 @@ import { existsSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 
 const distDir = "dist";
-const postSlugs = ["agent-business-landing", "hello-edge", "profile-and-blog-split"];
+const postSlugs = ["game-fullstack-notes", "hello-edge", "profile-and-blog-split"];
 
 const requiredFiles = [
   "dist/index.html",
@@ -15,6 +15,8 @@ const requiredFiles = [
   "dist/robots.txt",
   "dist/site.webmanifest",
   "dist/_headers",
+  "dist/live2d/live2dcubismcore.min.js",
+  "dist/live2d/haru/Haru.model3.json",
   ...postSlugs.map((slug) => `dist/posts/${slug}/index.html`),
   ...postSlugs.map((slug) => `dist/en/posts/${slug}/index.html`),
   ".node-version",
@@ -59,6 +61,9 @@ for (const [label, html, expected] of [
   if (!html.includes("application/ld+json")) {
     throw new Error(`${label} is missing JSON-LD structured data`);
   }
+  if (!html.includes('id="live2d-stage"')) {
+    throw new Error(`${label} is missing Live2D stage container`);
+  }
 }
 
 const localRefs = [...indexZh.matchAll(/(?:href|src)="(\/[^"#?]+)"/g)].map((match) => match[1]);
@@ -76,7 +81,7 @@ const feed = readFileSync("dist/feed.xml", "utf8");
 const sitemap = readFileSync("dist/sitemap.xml", "utf8");
 const llms = readFileSync("dist/llms.txt", "utf8");
 
-if (!llms.includes("Agent") || !llms.includes("Unity")) {
+if (!llms.includes("Unity") || !llms.includes("Live2D")) {
   throw new Error("dist/llms.txt is missing GEO profile facts");
 }
 

@@ -151,7 +151,7 @@ main {
 .hero {
   position: relative;
   min-height: calc(100svh - var(--header-height));
-  display: grid;
+  display: flex;
   align-items: center;
   overflow: hidden;
   padding: calc(var(--header-height) + 48px) clamp(22px, 6vw, 84px) 72px;
@@ -161,10 +161,88 @@ main {
     linear-gradient(135deg, #07101d 0%, #05070d 54%, #0f1520 100%);
 }
 
-.hero-copy {
+.hero-layout {
   position: relative;
   z-index: 2;
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(280px, 0.95fr);
+  gap: clamp(24px, 4vw, 56px);
+  align-items: center;
+  width: 100%;
+}
+
+.hero-copy {
+  position: relative;
   max-width: 760px;
+}
+
+.hero-stage {
+  position: relative;
+  justify-self: end;
+  width: min(100%, 420px);
+}
+
+.hero-stage-frame {
+  position: relative;
+  min-height: 520px;
+  padding: 18px 18px 8px;
+  border: 1px solid rgba(255, 79, 216, 0.28);
+  border-radius: 28px;
+  background:
+    linear-gradient(160deg, rgba(16, 21, 31, 0.92), rgba(5, 7, 13, 0.72)),
+    radial-gradient(circle at 20% 10%, rgba(0, 231, 255, 0.12), transparent 42%);
+  box-shadow:
+    0 24px 80px rgba(0, 0, 0, 0.42),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  overflow: hidden;
+}
+
+.hero-stage-frame::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(120deg, transparent 40%, rgba(255, 79, 216, 0.08) 50%, transparent 60%);
+  pointer-events: none;
+}
+
+.hero-stage-tag {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  margin-bottom: 8px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  border: 1px solid rgba(0, 231, 255, 0.24);
+  color: var(--pink);
+  font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Consolas, monospace;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.live2d-stage {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  height: 460px;
+}
+
+.live2d-stage canvas {
+  display: block;
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.live2d-stage--fallback::after {
+  content: "Live2D";
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  color: var(--muted);
+  font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Consolas, monospace;
+  font-size: 13px;
+  letter-spacing: 0.2em;
 }
 
 .eyebrow {
@@ -694,11 +772,21 @@ nav {
     opacity: 0.55;
   }
 
-  .orbital {
-    right: -80px;
-    top: 110px;
-    width: 220px;
-    height: 220px;
+  .hero-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .hero-stage {
+    justify-self: stretch;
+    width: 100%;
+  }
+
+  .hero-stage-frame {
+    min-height: 420px;
+  }
+
+  .live2d-stage {
+    height: 360px;
   }
 
   .cursor-glow {
@@ -738,7 +826,8 @@ nav {
   }
 
   .cursor-glow,
-  #aurora-canvas {
+  #aurora-canvas,
+  .live2d-stage {
     display: none;
   }
 }

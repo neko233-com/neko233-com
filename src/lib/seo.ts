@@ -159,7 +159,7 @@ export function renderLlmsTxt(): string {
 - Name: neko233 / 可乐鸡翅 / Ke Le Ji Chi
 - Role: ${profile.role} / ${profileEn.role}
 - Title: ${profile.title} / ${profileEn.title}
-- Current focus: Agent-driven business delivery / Agent 配合业务落地
+- Current focus: Web full-stack + Cloudflare Edge / Web 全栈 + Cloudflare Edge
 - Background: Unity + Go/Kotlin game-industry full-stack / 游戏行业 Unity + Go/Kotlin 全栈
 
 ## Languages / 语言

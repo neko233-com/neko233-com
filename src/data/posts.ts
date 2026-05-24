@@ -16,54 +16,52 @@ export interface Post {
 
 export const posts: Post[] = [
   {
-    slug: "agent-business-landing",
+    slug: "game-fullstack-notes",
     date: "2026-05-24",
     zh: {
-      title: "从游戏全栈到 Agent 业务落地",
-      description:
-        "neko233（可乐鸡翅）介绍从 Unity + Go/Kotlin 游戏全栈，转向 Agent 配合业务落地的技术路径。",
-      excerpt: "技术负责人视角：如何把 Agent 嵌入真实业务流程，而不是停留在 Demo。",
+      title: "从游戏全栈到 Web：我实际在写什么",
+      description: "neko233（可乐鸡翅）聊 Unity + Go/Kotlin 游戏全栈经历，以及现在在 Web / Edge 上交付的东西。",
+      excerpt: "不是转型故事会，是我现在还在维护的技术栈和仓库。",
       content: `
-      <p class="lede">我是 neko233（可乐鸡翅），全栈开发工程师，现任技术负责人。</p>
+      <p class="lede">可乐鸡翅，全栈，现任技术负责人。</p>
       <p>
-        当前主攻 <strong>Agent 配合业务落地</strong>：把模型能力、工具调用、流程编排与现有业务系统连接起来，
-        让 AI 成为可交付、可观测、可维护的产品能力，而不是独立演示。
+        游戏行业那几年，主要干两件事：<code>Unity</code> 客户端，和 <code>Go</code> + <code>Kotlin</code> 分布式后端。
+        带过人，扛过线上，也写过不少工具库。
       </p>
       <p>
-        在此之前，我在游戏行业担任资深全栈工程师与技术负责人，长期负责
-        <code>Unity</code> 客户端，以及基于 <code>Go</code> + <code>Kotlin</code> 的大型分布式后端服务。
+        现在在 Web 侧继续写能进生产的东西：静态站、Edge 部署、调度系统、配置迁移、证书自动化。
+        博客会同步 GitHub 仓库里的真实代码，不吹概念。
       </p>
-      <h2>我如何理解 Agent 落地</h2>
+      <h2>我常用的硬技能</h2>
       <ul>
-        <li>业务优先：从真实流程、真实数据、真实 SLA 出发设计 Agent 能力边界。</li>
-        <li>工程化：把 Prompt、工具、权限、日志、回退策略纳入标准工程流程。</li>
-        <li>可验证：每个 Agent 流程都应有明确输入输出与失败处理路径。</li>
+        <li>客户端：Unity、TypeScript 前端、Live2D 动效（这个站首页就有）。</li>
+        <li>后端：Go、Kotlin、分布式任务调度、配置版本迁移。</li>
+        <li>交付：Vite 构建、Cloudflare Pages/Workers、无数据库静态站。</li>
       </ul>
-      <p>这个博客会持续记录 GitHub 仓库实践、Agent 工程化经验，以及全栈架构笔记。</p>
+      <p>下面「仓库」和「文章」都是我在维护的东西，点开就能看代码。</p>
     `,
     },
     en: {
-      title: "From game full-stack to Agent-driven delivery",
-      description:
-        "neko233 (Ke Le Ji Chi) on moving from Unity + Go/Kotlin game full-stack work to Agent-driven business delivery.",
-      excerpt: "A tech-lead view on embedding Agents into real workflows instead of demo-only AI.",
+      title: "From game full-stack to web: what I actually ship",
+      description: "neko233 (Ke Le Ji Chi) on Unity + Go/Kotlin game work and what's in production on the web now.",
+      excerpt: "Not a career essay — the stacks and repos I still maintain.",
       content: `
-      <p class="lede">I am neko233 (Ke Le Ji Chi), a full-stack engineer and current tech lead.</p>
+      <p class="lede">Ke Le Ji Chi. Full-stack. Current tech lead.</p>
       <p>
-        My current focus is <strong>Agent-driven business delivery</strong>: connecting model capabilities, tool use,
-        orchestration, and existing product systems so AI becomes shippable, observable, and maintainable.
+        In games I spent years on <code>Unity</code> clients and <code>Go</code> + <code>Kotlin</code> distributed backends.
+        Led teams, ran production, shipped tooling.
       </p>
       <p>
-        Before this, I worked as a senior full-stack engineer and tech lead in the game industry, owning
-        <code>Unity</code> client systems and large distributed backends built with <code>Go</code> and <code>Kotlin</code>.
+        On the web I keep building things that go live: static sites, edge deploys, schedulers, config migration, cert automation.
+        This blog tracks real GitHub repos — no buzzword tours.
       </p>
-      <h2>How I think about Agent delivery</h2>
+      <h2>Hard skills I use</h2>
       <ul>
-        <li>Business first: define Agent boundaries from real workflows, data, and SLAs.</li>
-        <li>Engineering discipline: prompts, tools, permissions, logs, and fallback paths belong in normal delivery.</li>
-        <li>Verification: every Agent flow needs explicit inputs, outputs, and failure handling.</li>
+        <li>Client: Unity, TypeScript frontends, Live2D motion (yes, on this site's homepage).</li>
+        <li>Backend: Go, Kotlin, distributed job mesh, config migration.</li>
+        <li>Delivery: Vite builds, Cloudflare Pages/Workers, static sites without a database.</li>
       </ul>
-      <p>This blog documents GitHub repos, Agent engineering practice, and full-stack architecture notes.</p>
+      <p>Repos and posts below are things I actually maintain. Code is one click away.</p>
     `,
     },
   },
@@ -75,14 +73,14 @@ export const posts: Post[] = [
       description: "neko233 中文博客首次上线说明：Vite 8 + Cloudflare Pages 静态发布。",
       excerpt: "同一仓库兼顾 GitHub 特殊名片与 Cloudflare Pages 双语博客。",
       content: `
-      <p class="lede">这是 neko233（可乐鸡翅）的双语博客，部署在 Cloudflare Edge。</p>
+      <p class="lede">neko233（可乐鸡翅）的双语博客，跑在 Cloudflare Edge 上。</p>
       <p>
-        仓库边界清晰：<code>README.md</code> 负责 GitHub 名片展示；
-        <code>src/</code> 与 <code>dist/</code> 负责博客构建与发布。
+        仓库分两块：<code>README.md</code> 是 GitHub 名片；
+        <code>src/</code> → <code>dist/</code> 是博客。
       </p>
       <p>
-        Cloudflare Pages 使用 <code>npm run build</code> 构建并发布 <code>dist/</code>，
-        同时保留 Workers 静态资产模式作为可选部署路径。
+        构建命令 <code>npm run build</code>，输出 <code>dist/</code>，Pages 直接部署。
+        Workers 静态资产模式也留着，想用就用。
       </p>
       <pre><code>source: src/
 build: npm run build
@@ -96,14 +94,14 @@ guide: blog.md</code></pre>
       description: "Launch notes for the neko233 bilingual blog on Vite 8 and Cloudflare Pages.",
       excerpt: "One repository serves both the GitHub profile card and the Cloudflare Pages blog.",
       content: `
-      <p class="lede">This is the bilingual blog of neko233 (Ke Le Ji Chi), deployed on Cloudflare Edge.</p>
+      <p class="lede">Bilingual blog for neko233 (Ke Le Ji Chi), deployed on Cloudflare Edge.</p>
       <p>
-        The repository boundary is explicit: <code>README.md</code> powers the GitHub profile card,
-        while <code>src/</code> and <code>dist/</code> power blog build and deployment.
+        Two surfaces in one repo: <code>README.md</code> for the GitHub profile,
+        <code>src/</code> → <code>dist/</code> for the blog.
       </p>
       <p>
-        Cloudflare Pages builds with <code>npm run build</code> and publishes <code>dist/</code>,
-        while Workers static assets remain an optional deployment path.
+        Build with <code>npm run build</code>, publish <code>dist/</code> on Pages.
+        Workers static assets stay optional.
       </p>
       <pre><code>source: src/
 build: npm run build
@@ -121,14 +119,14 @@ guide: blog.md</code></pre>
       description: "neko233 说明同一仓库如何同时服务 GitHub Profile 与 Cloudflare 双语博客。",
       excerpt: "一个仓库、两个公开面：名片负责展示，博客负责内容与 SEO/GEO。",
       content: `
-      <p class="lede">这个仓库有两个公开面，但职责分离。</p>
+      <p class="lede">一个仓库，两个入口，各干各的。</p>
       <p>
-        <code>README.md</code> 面向 GitHub 账号主页，强调视觉展示与公开信号；
-        博客面向搜索引擎与 AI 检索，记录仓库实践与个人技术路径。
+        <code>README.md</code> 给 GitHub 主页看，视觉向；
+        博客给搜索引擎和读者，放技术内容和仓库说明。
       </p>
       <p>
-        博客采用 Vite 8 + Rolldown + TypeScript 构建，输出静态 <code>dist/</code>，
-        并生成中文与英文路由，便于 SEO / GEO 优化。
+        Vite 8 + TypeScript 构建静态 <code>dist/</code>，中英文路由分开，SEO / GEO 都照顾到。
+        首页还塞了个 Live2D 看板娘，因为好看。
       </p>
       <pre><code>GitHub 名片: README.md
 双语博客: src/ → dist/
@@ -141,14 +139,14 @@ Workers: wrangler.toml</code></pre>
       description: "How neko233 keeps the GitHub profile card and Cloudflare blog separate in one repository.",
       excerpt: "One repository, two public surfaces: profile for display, blog for content and SEO/GEO.",
       content: `
-      <p class="lede">This repository has two public surfaces with separate responsibilities.</p>
+      <p class="lede">One repo, two entry points, separate jobs.</p>
       <p>
-        <code>README.md</code> serves the GitHub account profile with visual signals,
-        while the blog serves search engines and AI retrieval with repo practice and career context.
+        <code>README.md</code> is the GitHub profile — visual, minimal.
+        The blog is for readers and search engines — repos, notes, tech content.
       </p>
       <p>
-        The blog is built with Vite 8 + Rolldown + TypeScript into static <code>dist/</code>,
-        with separate Chinese and English routes for SEO and GEO.
+        Built with Vite 8 + TypeScript into static <code>dist/</code>, with zh/en routes for SEO and GEO.
+        Homepage has a Live2D character because it looks good.
       </p>
       <pre><code>GitHub profile: README.md
 Bilingual blog: src/ → dist/

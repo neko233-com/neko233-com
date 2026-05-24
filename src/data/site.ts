@@ -11,16 +11,16 @@ export const siteConfig = {
 
 const localized = {
   zh: {
-    tagline: "全栈开发工程师 · 技术负责人",
+    tagline: "全栈 · 技术负责人",
     description:
-      "neko233（可乐鸡翅）的中文博客：记录 GitHub 开源仓库与工程实践。全栈开发工程师、技术负责人，主攻 Agent 业务落地，曾任游戏行业 Unity + Go/Kotlin 分布式后端资深全栈。",
+      "neko233（可乐鸡翅）的个人站：Unity / Go / Kotlin 出身，现在在 Web 和 Edge 上写能上线的代码。仓库、踩坑、Live2D 动效，都在这里。",
     author: "neko233（可乐鸡翅）",
     blogLabel: "中文博客",
   },
   en: {
-    tagline: "Full-stack Engineer · Tech Lead",
+    tagline: "Full-stack · Tech lead",
     description:
-      "neko233 (Ke Le Ji Chi) bilingual blog documenting GitHub repos and engineering practice. Full-stack engineer and tech lead focused on Agent-driven business delivery; former senior game-industry full-stack engineer for Unity and Go/Kotlin distributed backends.",
+      "neko233 (Ke Le Ji Chi): game-industry full-stack background, now shipping on the web and Cloudflare Edge. Repos, notes, Live2D UI experiments.",
     author: "neko233 (Ke Le Ji Chi)",
     blogLabel: "Bilingual Blog",
   },
