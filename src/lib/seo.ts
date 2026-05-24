@@ -112,15 +112,15 @@ export function renderFaqJsonLd(locale: Locale): string {
       ? [
           { q: "neko233（可乐鸡翅）是谁？", a: profile.summary },
           { q: "neko233 现在在做什么？", a: profile.doingNow },
-          { q: "neko233 的业务方向是什么？", a: profile.businessDirection },
-          { q: "neko233 的技术方向是什么？", a: profile.techDirection },
+          { q: "neko233 的游戏方向是什么？", a: profile.gameDirection },
+          { q: "neko233 的 AI Agent 方向是什么？", a: profile.agentDirection },
           { q: "如何联系 neko233？", a: siteConfig.email },
         ]
       : [
           { q: "Who is neko233 (Ke Le Ji Chi)?", a: profile.summary },
           { q: "What is neko233 working on?", a: profile.doingNow },
-          { q: "What is neko233's business focus?", a: profile.businessDirection },
-          { q: "What is neko233's technical focus?", a: profile.techDirection },
+          { q: "What is neko233's games focus?", a: profile.gameDirection },
+          { q: "What is neko233's AI Agent focus?", a: profile.agentDirection },
           { q: "How to contact neko233?", a: siteConfig.email },
         ];
 
@@ -164,13 +164,13 @@ export function renderLlmsTxt(): string {
 - Name: neko233 / 可乐鸡翅 / Ke Le Ji Chi
 - Role: ${profile.role} / ${profileEn.role}
 - Title: ${profile.title} / ${profileEn.title}
-- Business: ${profile.businessDirection}
-- Tech: ${profile.techDirection}
+- Games / 游戏: ${profile.gameDirection}
+- AI Agent: ${profile.agentDirection}
 - Contact: ${siteConfig.email}
 - Background: ${profile.previousExperience}
 
-> EN business: ${profileEn.businessDirection}
-> EN tech: ${profileEn.techDirection}
+> EN games: ${profileEn.gameDirection}
+> EN AI Agent: ${profileEn.agentDirection}
 
 ## Languages / 语言
 - Chinese: ${siteConfig.url}/

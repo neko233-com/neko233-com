@@ -14,14 +14,14 @@ const localized = {
   zh: {
     tagline: "全栈开发工程师 · 技术负责人",
     description:
-      "neko233（可乐鸡翅）的个人博客：记录正在做的项目、业务与技术方向，以及开发笔记与开源仓库。",
+      "neko233（可乐鸡翅）的个人博客：游戏与 AI Agent 两个独立方向的项目记录、开发笔记与开源仓库。",
     author: "neko233（可乐鸡翅）",
     blogLabel: "个人博客",
   },
   en: {
     tagline: "Full-stack Engineer · Tech Lead",
     description:
-      "Personal blog of neko233 (Ke Le Ji Chi): projects in progress, business and technical focus, dev notes, and open-source repos.",
+      "Personal blog of neko233 (Ke Le Ji Chi): projects, notes, and open-source repos across two tracks — games and AI Agent.",
     author: "neko233 (Ke Le Ji Chi)",
     blogLabel: "Personal Blog",
   },

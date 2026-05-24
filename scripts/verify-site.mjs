@@ -81,7 +81,7 @@ const feed = readFileSync("dist/feed.xml", "utf8");
 const sitemap = readFileSync("dist/sitemap.xml", "utf8");
 const llms = readFileSync("dist/llms.txt", "utf8");
 
-if (!llms.includes("Unity") || !llms.includes("qq1417015340@gmail.com")) {
+if (!llms.includes("游戏") || !llms.includes("AI Agent") || !llms.includes("qq1417015340@gmail.com")) {
   throw new Error("dist/llms.txt is missing GEO profile facts");
 }
 

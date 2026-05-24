@@ -235,12 +235,12 @@ export function renderHomePage(locale: Locale, assets: AssetRefs): string {
             <p>${escapeHtml(profile.doingNow)}</p>
           </article>
           <article class="about-card panel-card" data-reveal style="--reveal-delay:90ms">
-            <h3>${t("businessTitle", locale)}</h3>
-            <p>${escapeHtml(profile.businessDirection)}</p>
+            <h3>${t("gameTitle", locale)}</h3>
+            <p>${escapeHtml(profile.gameDirection)}</p>
           </article>
           <article class="about-card panel-card" data-reveal style="--reveal-delay:180ms">
-            <h3>${t("techTitle", locale)}</h3>
-            <p>${escapeHtml(profile.techDirection)}</p>
+            <h3>${t("agentTitle", locale)}</h3>
+            <p>${escapeHtml(profile.agentDirection)}</p>
           </article>
         </div>
         <div class="tag-strip" data-reveal style="--reveal-delay:240ms">
