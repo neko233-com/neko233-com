@@ -38,10 +38,17 @@ Cloudflare Pages settings:
 Framework preset    Vite
 Build command       npm run build
 Build output        dist
+Deploy command      leave empty
 Root directory      /
 Production branch   main
-Node version        20
+Node version        22
 ```
+
+Important:
+
+- **Do not** set `Deploy command` to `npx wrangler deploy` on a Pages project.
+- Pages publishes `dist/` automatically after `npm run build` succeeds.
+- `npx wrangler deploy` is only for optional Workers deployment (see below) and requires Node.js 22+.
 
 Required commands:
 
@@ -75,7 +82,15 @@ Before pushing, run:
 npm run validate
 ```
 
-`validate` runs build, verify, typecheck, and `wrangler deploy --dry-run`.
+`validate` runs build, verify, and typecheck. This matches the Cloudflare Pages CI contract.
+
+Optional Workers check:
+
+```bash
+npm run validate:worker
+```
+
+`validate:worker` additionally runs `wrangler deploy --dry-run` and requires Node.js 22+.
 
 When Pages-specific deployment is being changed, also run:
 

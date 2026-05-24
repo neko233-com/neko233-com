@@ -34,10 +34,17 @@ Recommended settings:
 Framework preset    Vite
 Build command       npm run build
 Build output        dist
+Deploy command      leave empty
 Root directory      /
 Production branch   main
-Node version        20
+Node version        22
 ```
+
+Important:
+
+- Pages only needs `npm run build`. Cloudflare publishes `dist/` automatically.
+- If `Deploy command` is set to `npx wrangler deploy`, the build can succeed and deployment still fail when Node.js is below 22.
+- Remove the deploy command for Pages, or upgrade Node.js to 22 before using Wrangler deploy.
 
 Steps:
 
@@ -86,7 +93,10 @@ Project name      neko233-com
 Build command     npm run build
 Deploy command    npx wrangler deploy
 Root directory    /
+Node version      22
 ```
+
+Workers deploy requires Node.js 22+ because Wrangler 4.94+ enforces it.
 
 If Cloudflare asks whether the project uses third-party build tooling, keep it enabled. This repository has a `package.json` so Cloudflare can install dependencies and run the deployment command reliably.
 
@@ -184,3 +194,14 @@ AGENTS.md defines the product spec for both surfaces
 ```
 
 Keep those boundaries explicit so profile changes do not break the deployed blog.
+
+## Troubleshooting Cloudflare Build Failures
+
+If logs show `Success: Build command completed` but deployment fails on `npx wrangler deploy`:
+
+1. You are using a **Pages** project with a Workers deploy command by mistake.
+2. Fix: open Cloudflare Dashboard → Workers & Pages → your project → Settings → Builds → set **Deploy command** to empty.
+3. Keep **Build command** as `npm run build` and **Build output** as `dist`.
+4. Set **Node.js version** to `22` (or rely on repo `.node-version`).
+
+If you intentionally deploy through **Workers**, keep `npx wrangler deploy` but set Node.js to `22`.

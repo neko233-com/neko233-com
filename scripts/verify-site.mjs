@@ -34,8 +34,8 @@ for (const file of requiredFiles) {
 }
 
 const nodeVersion = readFileSync(".node-version", "utf8").trim();
-if (nodeVersion !== "20") {
-  throw new Error(`.node-version must be 20 for Cloudflare Pages, got: ${nodeVersion}`);
+if (nodeVersion !== "22") {
+  throw new Error(`.node-version must be 22 for Cloudflare Pages and Wrangler, got: ${nodeVersion}`);
 }
 
 const packageJson = JSON.parse(readFileSync("package.json", "utf8"));
