@@ -1,18 +1,22 @@
 import { existsSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 
+const distDir = "dist";
+
 const requiredFiles = [
-  "site/index.html",
-  "site/404.html",
-  "site/styles.css",
-  "site/app.js",
-  "site/feed.xml",
-  "site/sitemap.xml",
-  "site/robots.txt",
-  "site/posts/hello-edge.html",
-  "site/posts/profile-and-blog-split.html",
+  "dist/index.html",
+  "dist/404.html",
+  "dist/feed.xml",
+  "dist/sitemap.xml",
+  "dist/robots.txt",
+  "dist/site.webmanifest",
+  "dist/posts/hello-edge/index.html",
+  "dist/posts/profile-and-blog-split/index.html",
   "wrangler.toml",
-  "src/worker.js",
+  "worker/worker.ts",
+  "functions/health.js",
+  "AGENTS.md",
+  "blog.md",
 ];
 
 for (const file of requiredFiles) {
@@ -21,26 +25,44 @@ for (const file of requiredFiles) {
   }
 }
 
-const index = readFileSync("site/index.html", "utf8");
+const index = readFileSync("dist/index.html", "utf8");
 const localRefs = [...index.matchAll(/(?:href|src)="(\/[^"#?]+)"/g)].map((match) => match[1]);
 
 for (const ref of localRefs) {
-  if (ref === "/") {
+  if (ref === "/" || ref.endsWith(".xml") || ref.endsWith(".webmanifest")) {
     continue;
   }
 
-  const filePath = join("site", ref.slice(1));
+  const filePath = join(distDir, ref.slice(1));
   if (!existsSync(filePath)) {
-    throw new Error(`Broken local reference in site/index.html: ${ref}`);
+    throw new Error(`Broken local reference in dist/index.html: ${ref}`);
+  }
+}
+
+const feed = readFileSync("dist/feed.xml", "utf8");
+const sitemap = readFileSync("dist/sitemap.xml", "utf8");
+
+for (const slug of ["hello-edge", "profile-and-blog-split"]) {
+  const url = `/posts/${slug}/`;
+  if (!feed.includes(url)) {
+    throw new Error(`RSS feed is missing post: ${slug}`);
+  }
+  if (!sitemap.includes(url)) {
+    throw new Error(`Sitemap is missing post: ${slug}`);
   }
 }
 
 const wrangler = readFileSync("wrangler.toml", "utf8");
 
-for (const expected of ['main = "src/worker.js"', 'binding = "ASSETS"', 'directory = "./site"']) {
+for (const expected of ['main = "worker/worker.ts"', 'binding = "ASSETS"', 'directory = "./dist"']) {
   if (!wrangler.includes(expected)) {
     throw new Error(`wrangler.toml is missing: ${expected}`);
   }
 }
 
-console.log("site verification passed");
+const manifestPath = join(distDir, ".vite", "manifest.json");
+if (!existsSync(manifestPath)) {
+  throw new Error("Missing Vite build manifest at dist/.vite/manifest.json");
+}
+
+console.log("dist verification passed");

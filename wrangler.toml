@@ -1,9 +1,9 @@
 name = "neko233-com"
-main = "src/worker.js"
+main = "worker/worker.ts"
 compatibility_date = "2026-05-24"
 workers_dev = true
 
 [assets]
 binding = "ASSETS"
-directory = "./site"
+directory = "./dist"
 not_found_handling = "404-page"

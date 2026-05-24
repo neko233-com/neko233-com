@@ -3,28 +3,22 @@
 This repository has two jobs:
 
 1. `README.md` is the GitHub account profile surface.
-2. `site/` is the static personal blog source for Cloudflare Pages and Workers.
+2. `src/` is the Vite 8 + TypeScript blog source; Cloudflare Pages deploys the built `dist/` output.
 
-The blog is intentionally static: no build step, no database, no server runtime required. Cloudflare can deploy it directly from this repository.
+The blog is static: no database, no server runtime required at request time. Cloudflare builds and deploys from this repository.
 
 ## Repository Layout
 
 ```txt
 README.md                         GitHub profile README
+AGENTS.md                         Agent and product spec
 blog.md                           Blog deployment and operating guide
-site/index.html                   Static blog home page
-site/styles.css                   Blog styles and animations
-site/app.js                       Small client-side interactions
-site/posts/hello-edge.html        Example post
-site/posts/profile-and-blog-split.html Example post
-site/feed.xml                     RSS feed
-site/sitemap.xml                  Search engine sitemap
-site/robots.txt                   Crawler rules
-site/404.html                     Static not-found page
-site/site.webmanifest             Web app metadata
-site/_headers                     Cloudflare Pages headers
-src/worker.js                     Cloudflare Worker entry
-package.json                      Cloudflare build/deploy scripts
+src/                              Vite blog source (TypeScript)
+public/                           Static assets copied into dist/
+dist/                             Vite build output (generated)
+worker/worker.ts                  Cloudflare Worker entry
+functions/health.js               Cloudflare Pages /health function
+package.json                      npm scripts and dependencies
 wrangler.toml                     Cloudflare Workers static assets config
 .github/workflows/                GitHub profile animation automation
 assets/                           README visual assets
@@ -32,16 +26,17 @@ assets/                           README visual assets
 
 ## Cloudflare Pages Deployment
 
-Use this mode when you want Cloudflare to deploy the static blog from GitHub automatically.
+Use this mode when you want Cloudflare to build and deploy the blog from GitHub automatically.
 
 Recommended settings:
 
 ```txt
-Framework preset    None
-Build command       leave empty
-Build output        site
+Framework preset    Vite
+Build command       npm run build
+Build output        dist
 Root directory      /
 Production branch   main
+Node version        20
 ```
 
 Steps:
@@ -54,16 +49,28 @@ Steps:
 6. Deploy.
 7. Add a custom domain if needed, for example `neko233.com`.
 
-Pages will serve `site/index.html` as the blog home page.
+Pages will serve `dist/index.html` as the blog home page.
 
-Cloudflare Pages also reads these static support files:
+Cloudflare Pages also reads these static support files from `dist/`:
 
 ```txt
-site/_headers      security and cache headers
-site/404.html      not-found page
-site/robots.txt    crawler rules
-site/sitemap.xml   indexable URL list
-site/feed.xml      RSS feed
+dist/_headers       security and cache headers
+dist/404.html       not-found page
+dist/robots.txt     crawler rules
+dist/sitemap.xml    indexable URL list
+dist/feed.xml       RSS feed
+functions/health.js /health endpoint
+```
+
+## Local Commands
+
+```bash
+npm install
+npm run dev
+npm run build
+npm run verify
+npm run preview
+npx wrangler pages deploy dist --project-name neko233-com
 ```
 
 ## Cloudflare Workers Deployment
@@ -79,33 +86,35 @@ Deploy command    npx wrangler deploy
 Root directory    /
 ```
 
-If Cloudflare asks whether the project uses third-party build tooling, keep it enabled. This repository has a `package.json` so Cloudflare can install Wrangler and run the deployment command reliably.
+If Cloudflare asks whether the project uses third-party build tooling, keep it enabled. This repository has a `package.json` so Cloudflare can install dependencies and run the deployment command reliably.
 
 Install Wrangler locally:
 
 ```bash
-npm install -g wrangler
+npm install
 ```
 
 Login:
 
 ```bash
-wrangler login
+npx wrangler login
 ```
 
 Preview locally:
 
 ```bash
-wrangler dev
+npm run build
+npx wrangler dev
 ```
 
 Deploy:
 
 ```bash
-wrangler deploy
+npm run build
+npm run worker:deploy
 ```
 
-The Worker entry is `src/worker.js`. It serves static assets from `site/` through the `ASSETS` binding configured in `wrangler.toml`. Missing routes use the static `404.html` page because `not_found_handling` is set to `404-page`.
+The Worker entry is `worker/worker.ts`. It serves static assets from `dist/` through the `ASSETS` binding configured in `wrangler.toml`. Missing routes use the static `404.html` page because `not_found_handling` is set to `404-page`.
 
 The health check route is:
 
@@ -115,31 +124,31 @@ The health check route is:
 
 ## Writing Posts
 
-Create posts as static HTML files inside `site/posts/`.
+Posts are data-driven TypeScript objects in `src/data/posts.ts`.
 
 Post rules:
 
 ```txt
-Use lowercase kebab-case filenames.
-Keep each post standalone and link it from site/index.html.
-Use absolute or root-relative links for shared assets.
-Keep code examples inside pre/code blocks.
+Use lowercase kebab-case slugs.
+Keep each post content as an HTML fragment in posts.ts.
+Run npm run build so the post appears in dist/, RSS, and sitemap.
 Do not put GitHub profile-only badges inside blog posts.
 ```
 
-Example:
+After adding a post:
 
-```txt
-site/posts/cloudflare-pages-notes.html
+```bash
+npm run build
+npm run verify
 ```
 
-Then add it to the article list in `site/index.html`.
-
-Also update:
+The build generates:
 
 ```txt
-site/feed.xml
-site/sitemap.xml
+dist/posts/<slug>/index.html
+dist/feed.xml
+dist/sitemap.xml
+dist/index.html post list
 ```
 
 ## GitHub Profile Rules
@@ -161,20 +170,15 @@ To show unlocked achievements from private work:
 2. Enable private contribution visibility.
 3. Keep private contribution counts visible on the profile.
 
-GitHub may show achievement messaging such as:
-
-```txt
-You unlocked new achievements from private contributions. Show them by including private contributions in your profile settings.
-```
-
 ## Source Of Truth
 
 This repository is the source for both surfaces:
 
 ```txt
 GitHub reads README.md
-Cloudflare Pages reads site/
-Cloudflare Workers reads site/ through wrangler.toml
+Cloudflare Pages builds src/ into dist/
+Cloudflare Workers reads dist/ through wrangler.toml
+AGENTS.md defines the product spec for both surfaces
 ```
 
 Keep those boundaries explicit so profile changes do not break the deployed blog.

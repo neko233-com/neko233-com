@@ -1,16 +1,21 @@
 {
   "name": "neko233-com",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
-  "description": "GitHub profile repository and Cloudflare static blog for neko233-com.",
+  "description": "GitHub profile repository and Cloudflare Pages blog for neko233-com.",
   "type": "module",
   "scripts": {
-    "build": "node scripts/verify-site.mjs",
-    "dev": "wrangler dev",
-    "deploy": "wrangler deploy",
-    "verify": "node scripts/verify-site.mjs"
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "verify": "node scripts/verify-site.mjs",
+    "worker:deploy": "wrangler deploy",
+    "pages:deploy": "npx wrangler pages deploy dist --project-name neko233-com"
   },
   "devDependencies": {
+    "@cloudflare/workers-types": "^4.20250525.0",
+    "typescript": "^5.8.3",
+    "vite": "^8.0.0",
     "wrangler": "^4.18.0"
   }
 }

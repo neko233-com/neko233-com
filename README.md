@@ -27,7 +27,7 @@ repo role     GitHub profile README + Cloudflare blog source
 >
 > Blog rule: the Cloudflare Pages / Workers static blog source lives in this same repository. See [blog.md](./blog.md) for deployment rules.
 >
-> Worker rule: Cloudflare Workers deploys through `src/worker.js`, `package.json`, and `wrangler.toml`; the static blog assets are in `site/`.
+> Worker rule: Cloudflare Workers deploys through `worker/worker.ts`, `package.json`, and `wrangler.toml`; the blog builds from `src/` into `dist/`. See [blog.md](./blog.md) for Pages and Workers commands.
 
 <div align="center">
 
