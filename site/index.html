@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="neko233-com personal blog, deployed as a static site on Cloudflare Pages and Workers." />
+    <meta name="theme-color" content="#05070d" />
+    <meta property="og:title" content="neko233-com | Edge Blog" />
+    <meta property="og:description" content="Code, automation, systems, and Cloudflare edge notes from neko233-com." />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://neko233.com/" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <title>neko233-com | Edge Blog</title>
+    <link rel="alternate" type="application/rss+xml" title="neko233-com RSS" href="/feed.xml" />
+    <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <header class="site-header" data-reveal>
+      <a class="brand" href="/">
+        <span class="brand-mark" aria-hidden="true"></span>
+        neko233-com
+      </a>
+      <nav aria-label="Primary navigation">
+        <a href="#posts">Posts</a>
+        <a href="#edge">Edge</a>
+        <a href="https://github.com/neko233-com/neko233-com">GitHub</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero" aria-labelledby="hero-title">
+        <div class="hero-grid" aria-hidden="true">
+          <span></span><span></span><span></span><span></span>
+          <span></span><span></span><span></span><span></span>
+          <span></span><span></span><span></span><span></span>
+        </div>
+        <div class="orbital" aria-hidden="true">
+          <span class="orbit orbit-a"></span>
+          <span class="orbit orbit-b"></span>
+          <span class="orbit orbit-c"></span>
+        </div>
+        <div class="hero-copy" data-reveal>
+          <p class="eyebrow">Cloudflare powered personal blog</p>
+          <h1 id="hero-title">neko233-com</h1>
+          <p class="lede">Notes from the edge: code, automation, systems, and the small details that make tools feel alive.</p>
+          <div class="hero-actions">
+            <a class="button primary" href="#posts">Read posts</a>
+            <a class="button secondary" href="https://github.com/neko233-com">GitHub profile</a>
+          </div>
+        </div>
+      </section>
+
+      <section class="ticker" aria-label="Deployment signals">
+        <div>
+          <span>Static source</span>
+          <strong>site/</strong>
+        </div>
+        <div>
+          <span>Deploy target</span>
+          <strong>Cloudflare Pages</strong>
+        </div>
+        <div>
+          <span>Worker assets</span>
+          <strong>wrangler.toml</strong>
+        </div>
+      </section>
+
+      <section class="section" id="posts" aria-labelledby="posts-title">
+        <div class="section-heading" data-reveal>
+          <p class="eyebrow">Logbook</p>
+          <h2 id="posts-title">Latest Posts</h2>
+        </div>
+        <div class="post-list">
+          <article class="post-row" data-reveal>
+            <time datetime="2026-05-24">2026.05.24</time>
+            <div>
+              <h3><a href="/posts/hello-edge.html">Hello from the edge</a></h3>
+              <p>A first note about using one repository as both GitHub profile and Cloudflare blog source.</p>
+            </div>
+            <a class="read-link" href="/posts/hello-edge.html" aria-label="Read Hello from the edge">Read</a>
+          </article>
+          <article class="post-row muted" data-reveal>
+            <time datetime="2026-05-24">2026.05.24</time>
+            <div>
+              <h3><a href="/posts/profile-and-blog-split.html">Profile and blog split</a></h3>
+              <p>How this repository keeps GitHub profile animation and Cloudflare blog deployment separate.</p>
+            </div>
+            <a class="read-link" href="/posts/profile-and-blog-split.html" aria-label="Read Profile and blog split">Read</a>
+          </article>
+        </div>
+      </section>
+
+      <section class="section split" id="edge" aria-labelledby="edge-title">
+        <div data-reveal>
+          <p class="eyebrow">Source station</p>
+          <h2 id="edge-title">One repository, two public surfaces.</h2>
+        </div>
+        <div class="terminal" data-reveal>
+          <p><span>$</span> github profile reads README.md</p>
+          <p><span>$</span> cloudflare pages reads site/</p>
+          <p><span>$</span> workers serve static assets from wrangler.toml</p>
+          <p><span>$</span> blog.md keeps the operating rules clear</p>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <span>neko233-com</span>
+      <span>
+        <a href="/feed.xml">RSS</a>
+        <a href="https://github.com/neko233-com/neko233-com/blob/main/blog.md">blog.md</a>
+      </span>
+    </footer>
+
+    <script src="/app.js"></script>
+  </body>
+</html>

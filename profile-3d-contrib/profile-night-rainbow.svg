@@ -1,0 +1,48 @@
+<svg width="1000" height="420" viewBox="0 0 1000 420" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+  <title id="title">3D contribution profile placeholder</title>
+  <desc id="desc">Animated placeholder shown until GitHub Actions generates the real 3D contribution profile.</desc>
+  <defs>
+    <linearGradient id="rainbow" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#00e7ff"/>
+      <stop offset=".28" stop-color="#7cff6b"/>
+      <stop offset=".56" stop-color="#ffe66d"/>
+      <stop offset="1" stop-color="#ff4fd8"/>
+    </linearGradient>
+    <linearGradient id="panel" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#101827"/>
+      <stop offset="1" stop-color="#05070d"/>
+    </linearGradient>
+    <filter id="glow" x="-20%" y="-30%" width="140%" height="160%">
+      <feGaussianBlur stdDeviation="4" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <style>
+      .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+      .cube { animation: rise 2.5s ease-in-out infinite; }
+      .c2 { animation-delay: .2s; }
+      .c3 { animation-delay: .4s; }
+      .c4 { animation-delay: .6s; }
+      .c5 { animation-delay: .8s; }
+      .flow { stroke-dasharray: 130 60; animation: flow 4s linear infinite; }
+      @keyframes rise { 0%, 100% { transform: translateY(0); opacity: .55; } 50% { transform: translateY(-22px); opacity: 1; } }
+      @keyframes flow { to { stroke-dashoffset: -380; } }
+    </style>
+  </defs>
+  <rect width="1000" height="420" rx="18" fill="url(#panel)"/>
+  <path class="flow" d="M70 90H930" stroke="url(#rainbow)" stroke-width="4" stroke-linecap="round" filter="url(#glow)"/>
+  <text x="500" y="74" text-anchor="middle" class="mono" font-size="20" fill="#b9c7dc">3D contribution profile will appear after the first Actions run</text>
+  <g transform="translate(185 150)" filter="url(#glow)">
+    <rect class="cube" x="0" y="96" width="56" height="56" rx="8" fill="#00e7ff" opacity=".8"/>
+    <rect class="cube c2" x="78" y="68" width="56" height="84" rx="8" fill="#7cff6b" opacity=".8"/>
+    <rect class="cube c3" x="156" y="34" width="56" height="118" rx="8" fill="#ffe66d" opacity=".8"/>
+    <rect class="cube c4" x="234" y="0" width="56" height="152" rx="8" fill="#ff4fd8" opacity=".8"/>
+    <rect class="cube c5" x="312" y="50" width="56" height="102" rx="8" fill="#00e7ff" opacity=".8"/>
+    <rect class="cube c3" x="390" y="80" width="56" height="72" rx="8" fill="#7cff6b" opacity=".8"/>
+    <rect class="cube c2" x="468" y="20" width="56" height="132" rx="8" fill="#ffe66d" opacity=".8"/>
+    <rect class="cube c4" x="546" y="58" width="56" height="94" rx="8" fill="#ff4fd8" opacity=".8"/>
+  </g>
+  <text x="500" y="365" text-anchor="middle" class="mono" font-size="16" fill="#7f91ad">workflow: .github/workflows/profile-animations.yml</text>
+</svg>

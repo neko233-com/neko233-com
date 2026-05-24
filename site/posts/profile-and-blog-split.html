@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="How neko233-com keeps GitHub profile animation and Cloudflare blog deployment separate in one repository." />
+    <meta name="theme-color" content="#05070d" />
+    <meta property="og:title" content="Profile and blog split | neko233-com" />
+    <meta property="og:description" content="One repository can serve a GitHub profile and a Cloudflare static blog when the boundaries are explicit." />
+    <meta property="og:type" content="article" />
+    <meta property="article:published_time" content="2026-05-24" />
+    <title>Profile and blog split | neko233-com</title>
+    <link rel="alternate" type="application/rss+xml" title="neko233-com RSS" href="/feed.xml" />
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <header class="site-header is-visible">
+      <a class="brand" href="/">
+        <span class="brand-mark" aria-hidden="true"></span>
+        neko233-com
+      </a>
+      <nav aria-label="Primary navigation">
+        <a href="/">Home</a>
+        <a href="/#posts">Posts</a>
+        <a href="https://github.com/neko233-com/neko233-com">GitHub</a>
+      </nav>
+    </header>
+
+    <main class="section article">
+      <article>
+        <p class="eyebrow">2026.05.24</p>
+        <h1>Profile and blog split</h1>
+        <p class="lede">The repository has two public surfaces, but each surface has one job.</p>
+        <p>
+          <code>README.md</code> belongs to the GitHub account profile. It can be animated, badge-heavy, and optimized for quick profile scanning.
+        </p>
+        <p>
+          <code>site/</code> belongs to Cloudflare. It stays deployable as plain static files, so Pages can publish it without a build command and Workers can serve it through static assets.
+        </p>
+        <pre><code>GitHub profile: README.md
+Cloudflare source: site/
+Operating guide: blog.md
+Workers config: wrangler.toml</code></pre>
+        <p>
+          Keeping this split visible avoids accidental coupling. Profile changes should not break the blog, and blog deployment details should not crowd the GitHub profile.
+        </p>
+        <p><a class="button secondary" href="/">Back to home</a></p>
+      </article>
+    </main>
+
+    <script src="/app.js"></script>
+  </body>
+</html>

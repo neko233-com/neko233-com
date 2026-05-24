@@ -1,0 +1,88 @@
+<svg width="1000" height="360" viewBox="0 0 1000 360" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+  <title id="title">Animated console header for neko233-com</title>
+  <desc id="desc">A neon terminal dashboard with animated scan lines, particles, and waveform bars.</desc>
+  <defs>
+    <linearGradient id="panel" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0d1220"/>
+      <stop offset="0.45" stop-color="#101827"/>
+      <stop offset="1" stop-color="#05070d"/>
+    </linearGradient>
+    <linearGradient id="cyanPink" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#00e7ff"/>
+      <stop offset="0.5" stop-color="#7cff6b"/>
+      <stop offset="1" stop-color="#ff4fd8"/>
+    </linearGradient>
+    <filter id="glow" x="-20%" y="-40%" width="140%" height="180%">
+      <feGaussianBlur stdDeviation="4" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <pattern id="grid" width="36" height="36" patternUnits="userSpaceOnUse">
+      <path d="M36 0H0V36" stroke="#25324a" stroke-width="1" opacity="0.45"/>
+    </pattern>
+    <clipPath id="clip">
+      <rect x="34" y="26" width="932" height="300" rx="22"/>
+    </clipPath>
+    <style>
+      .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace; }
+      .title { font-size: 60px; font-weight: 800; letter-spacing: 0; }
+      .sub { font-size: 18px; fill: #b9c7dc; }
+      .tiny { font-size: 13px; fill: #7f91ad; }
+      .scan { animation: scan 3.8s linear infinite; }
+      .blink { animation: blink 1s steps(1) infinite; }
+      .pulse { animation: pulse 2s ease-in-out infinite; transform-origin: center; }
+      .float-a { animation: floatA 6s ease-in-out infinite; }
+      .float-b { animation: floatB 7.5s ease-in-out infinite; }
+      .bar1 { animation: bar 1.2s ease-in-out infinite; transform-origin: bottom; }
+      .bar2 { animation: bar 1.6s ease-in-out infinite .2s; transform-origin: bottom; }
+      .bar3 { animation: bar 1.05s ease-in-out infinite .1s; transform-origin: bottom; }
+      .bar4 { animation: bar 1.8s ease-in-out infinite .35s; transform-origin: bottom; }
+      .dash { stroke-dasharray: 280 80; animation: dash 5s linear infinite; }
+      @keyframes scan { from { transform: translateY(-120px); } to { transform: translateY(360px); } }
+      @keyframes blink { 0%, 48% { opacity: 1; } 49%, 100% { opacity: 0; } }
+      @keyframes pulse { 0%, 100% { opacity: .55; transform: scale(.98); } 50% { opacity: 1; transform: scale(1.04); } }
+      @keyframes floatA { 0%, 100% { transform: translate(0, 0); } 50% { transform: translate(12px, -16px); } }
+      @keyframes floatB { 0%, 100% { transform: translate(0, 0); } 50% { transform: translate(-14px, 12px); } }
+      @keyframes bar { 0%, 100% { transform: scaleY(.35); } 50% { transform: scaleY(1); } }
+      @keyframes dash { to { stroke-dashoffset: -360; } }
+    </style>
+  </defs>
+  <rect width="1000" height="360" rx="28" fill="#05070d"/>
+  <rect x="18" y="14" width="964" height="324" rx="28" fill="url(#panel)" stroke="#1f2b44" stroke-width="2"/>
+  <g clip-path="url(#clip)">
+    <rect x="34" y="26" width="932" height="300" fill="url(#grid)" opacity="0.65"/>
+    <path class="dash" d="M-20 273C125 218 217 319 348 263C493 201 535 106 680 160C794 202 847 270 1025 182" stroke="url(#cyanPink)" stroke-width="4" filter="url(#glow)" opacity=".9"/>
+    <path class="scan" d="M0 0H1000V70H0Z" fill="url(#cyanPink)" opacity=".08"/>
+    <g class="float-a" filter="url(#glow)">
+      <circle cx="812" cy="88" r="7" fill="#00e7ff"/>
+      <circle cx="860" cy="132" r="4" fill="#ff4fd8"/>
+      <circle cx="778" cy="176" r="5" fill="#7cff6b"/>
+    </g>
+    <g class="float-b" filter="url(#glow)">
+      <circle cx="160" cy="86" r="5" fill="#ff4fd8"/>
+      <circle cx="206" cy="242" r="6" fill="#00e7ff"/>
+      <circle cx="112" cy="196" r="4" fill="#ffe66d"/>
+    </g>
+  </g>
+  <circle cx="62" cy="55" r="8" fill="#ff5f57"/>
+  <circle cx="88" cy="55" r="8" fill="#ffbd2e"/>
+  <circle cx="114" cy="55" r="8" fill="#28c840"/>
+  <text x="58" y="124" class="mono tiny">~/github/profile</text>
+  <text x="58" y="184" class="mono title" fill="url(#cyanPink)" filter="url(#glow)">neko233-com</text>
+  <text x="62" y="224" class="mono sub">animated profile dashboard / code telemetry / creative engineering</text>
+  <text x="62" y="264" class="mono tiny" fill="#7f91ad">&gt; booting profile modules</text>
+  <rect class="blink" x="295" y="250" width="12" height="20" rx="2" fill="#00e7ff"/>
+  <g transform="translate(735 215)" filter="url(#glow)">
+    <rect class="bar1" x="0" y="0" width="16" height="70" rx="8" fill="#00e7ff"/>
+    <rect class="bar2" x="28" y="0" width="16" height="70" rx="8" fill="#7cff6b"/>
+    <rect class="bar3" x="56" y="0" width="16" height="70" rx="8" fill="#ffe66d"/>
+    <rect class="bar4" x="84" y="0" width="16" height="70" rx="8" fill="#ff4fd8"/>
+  </g>
+  <g class="pulse" filter="url(#glow)">
+    <circle cx="842" cy="126" r="44" stroke="#00e7ff" stroke-width="2" opacity=".8"/>
+    <circle cx="842" cy="126" r="25" stroke="#ff4fd8" stroke-width="2" opacity=".8"/>
+    <circle cx="842" cy="126" r="5" fill="#7cff6b"/>
+  </g>
+</svg>

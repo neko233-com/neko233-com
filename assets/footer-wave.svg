@@ -1,0 +1,26 @@
+<svg width="1000" height="140" viewBox="0 0 1000 140" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Animated footer wave">
+  <defs>
+    <linearGradient id="wave" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#00e7ff"/>
+      <stop offset=".33" stop-color="#7cff6b"/>
+      <stop offset=".66" stop-color="#ffe66d"/>
+      <stop offset="1" stop-color="#ff4fd8"/>
+    </linearGradient>
+    <filter id="glow" x="-10%" y="-70%" width="120%" height="240%">
+      <feGaussianBlur stdDeviation="4" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <style>
+      .w1 { stroke-dasharray: 70 28; animation: move 4s linear infinite; }
+      .w2 { stroke-dasharray: 110 38; animation: move 6s linear infinite reverse; opacity: .55; }
+      @keyframes move { to { stroke-dashoffset: -360; } }
+    </style>
+  </defs>
+  <rect width="1000" height="140" rx="18" fill="#05070d"/>
+  <path class="w2" d="M-20 82C87 45 170 115 282 79C418 35 499 112 623 74C748 36 837 103 1020 54" stroke="url(#wave)" stroke-width="3" filter="url(#glow)"/>
+  <path class="w1" d="M-20 72C87 35 170 105 282 69C418 25 499 102 623 64C748 26 837 93 1020 44" stroke="url(#wave)" stroke-width="5" stroke-linecap="round" filter="url(#glow)"/>
+  <text x="500" y="108" text-anchor="middle" fill="#b9c7dc" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="16">thanks for visiting</text>
+</svg>
