@@ -1,3 +1,4 @@
+import { initLocaleSwitcher, markCurrentLocale } from "./i18n/locale-switcher";
 import "./styles/main.css";
 import { initAuroraCanvas } from "./animations/aurora-canvas";
 import { initCursorGlow } from "./animations/cursor-glow";
@@ -13,6 +14,8 @@ function prefersReducedMotion(): boolean {
 }
 
 function boot(): void {
+  markCurrentLocale();
+  initLocaleSwitcher();
   initRevealObserver();
 
   if (prefersReducedMotion()) {

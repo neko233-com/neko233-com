@@ -2,3 +2,6 @@ User-agent: *
 Allow: /
 
 Sitemap: https://neko233.com/sitemap.xml
+
+# GEO / LLM crawlers
+# llms.txt provides structured site summary for AI retrieval.

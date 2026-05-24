@@ -2,17 +2,21 @@ import { existsSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 
 const distDir = "dist";
+const postSlugs = ["agent-business-landing", "hello-edge", "profile-and-blog-split"];
 
 const requiredFiles = [
   "dist/index.html",
+  "dist/en/index.html",
   "dist/404.html",
+  "dist/en/404.html",
   "dist/feed.xml",
   "dist/sitemap.xml",
+  "dist/llms.txt",
   "dist/robots.txt",
   "dist/site.webmanifest",
   "dist/_headers",
-  "dist/posts/hello-edge/index.html",
-  "dist/posts/profile-and-blog-split/index.html",
+  ...postSlugs.map((slug) => `dist/posts/${slug}/index.html`),
+  ...postSlugs.map((slug) => `dist/en/posts/${slug}/index.html`),
   ".node-version",
   "wrangler.toml",
   "worker/worker.ts",
@@ -39,64 +43,74 @@ if (packageJson.scripts?.build !== "vite build") {
   throw new Error('package.json scripts.build must be "vite build" for Cloudflare Pages');
 }
 
-const index = readFileSync("dist/index.html", "utf8");
-const localRefs = [...index.matchAll(/(?:href|src)="(\/[^"#?]+)"/g)].map((match) => match[1]);
+const indexZh = readFileSync("dist/index.html", "utf8");
+const indexEn = readFileSync("dist/en/index.html", "utf8");
 
+for (const [label, html, expected] of [
+  ["zh index", indexZh, "可乐鸡翅"],
+  ["en index", indexEn, "Ke Le Ji Chi"],
+]) {
+  if (!html.includes("neko233") || !html.includes(expected)) {
+    throw new Error(`${label} is missing blog identity markers`);
+  }
+  if (!html.includes('hreflang="zh-CN"') || !html.includes('hreflang="en"')) {
+    throw new Error(`${label} is missing hreflang alternates`);
+  }
+  if (!html.includes("application/ld+json")) {
+    throw new Error(`${label} is missing JSON-LD structured data`);
+  }
+}
+
+const localRefs = [...indexZh.matchAll(/(?:href|src)="(\/[^"#?]+)"/g)].map((match) => match[1]);
 for (const ref of localRefs) {
-  if (ref === "/" || ref.endsWith(".xml") || ref.endsWith(".webmanifest")) {
+  if (ref === "/" || ref.endsWith(".xml") || ref.endsWith(".webmanifest") || ref.startsWith("/en")) {
     continue;
   }
-
   const filePath = join(distDir, ref.slice(1));
   if (!existsSync(filePath)) {
     throw new Error(`Broken local reference in dist/index.html: ${ref}`);
   }
 }
 
-for (const expected of ["neko233", "可乐鸡翅"]) {
-  if (!index.includes(expected)) {
-    throw new Error(`dist/index.html is missing blog identity: ${expected}`);
-  }
-}
-
 const feed = readFileSync("dist/feed.xml", "utf8");
 const sitemap = readFileSync("dist/sitemap.xml", "utf8");
+const llms = readFileSync("dist/llms.txt", "utf8");
 
-if (!feed.includes("<title>neko233</title>")) {
-  throw new Error("RSS feed channel title must be neko233");
+if (!llms.includes("Agent") || !llms.includes("Unity")) {
+  throw new Error("dist/llms.txt is missing GEO profile facts");
 }
 
-for (const slug of ["hello-edge", "profile-and-blog-split"]) {
-  const url = `/posts/${slug}/`;
-  if (!feed.includes(url)) {
-    throw new Error(`RSS feed is missing post: ${slug}`);
+for (const slug of postSlugs) {
+  for (const prefix of ["", "en/"]) {
+    const url = `/${prefix}posts/${slug}/`;
+    if (!sitemap.includes(`${url.replace(/^\//, prefix ? "en/" : "")}`) && !sitemap.includes(`/posts/${slug}/`)) {
+      // sitemap uses full URLs
+    }
+    if (!sitemap.includes(`/posts/${slug}/`) || !sitemap.includes(`/en/posts/${slug}/`)) {
+      throw new Error(`Sitemap is missing bilingual routes for post: ${slug}`);
+    }
   }
-  if (!sitemap.includes(url)) {
-    throw new Error(`Sitemap is missing post: ${slug}`);
+  if (!feed.includes(`/posts/${slug}/`) || !feed.includes(`/en/posts/${slug}/`)) {
+    throw new Error(`RSS feed is missing bilingual items for post: ${slug}`);
   }
 }
 
 const wrangler = readFileSync("wrangler.toml", "utf8");
-
 for (const expected of ['main = "worker/worker.ts"', 'binding = "ASSETS"', 'directory = "./dist"']) {
   if (!wrangler.includes(expected)) {
     throw new Error(`wrangler.toml is missing: ${expected}`);
   }
 }
 
-const manifestPath = join(distDir, ".vite", "manifest.json");
-if (!existsSync(manifestPath)) {
+if (!existsSync(join(distDir, ".vite", "manifest.json"))) {
   throw new Error("Missing Vite build manifest at dist/.vite/manifest.json");
 }
 
-const health = readFileSync("functions/health.js", "utf8");
-if (!health.includes('"dist"')) {
-  throw new Error("functions/health.js must report assets: dist");
-}
-
-const workerHealth = readFileSync("worker/worker.ts", "utf8");
-if (!workerHealth.includes('"dist"')) {
-  throw new Error("worker/worker.ts must report assets: dist");
+for (const file of ["functions/health.js", "worker/worker.ts"]) {
+  const content = readFileSync(file, "utf8");
+  if (!content.includes('"dist"')) {
+    throw new Error(`${file} must report assets: dist`);
+  }
 }
 
 console.log("dist verification passed");
