@@ -1,24 +1,26 @@
 name: profile animations
 
 on:
-  schedule:
-    - cron: "23 18 * * *"
   workflow_dispatch:
-  push:
-    branches: [main]
-    paths:
-      - .github/workflows/profile-animations.yml
-      - README.md
 
 permissions:
   contents: write
 
+concurrency:
+  group: profile-animations-${{ github.ref }}
+  cancel-in-progress: false
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: "true"
+
 jobs:
-  snake:
+  profile-animations:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout profile repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
 
       - name: Generate contribution snake
         uses: Platane/snk@v3
@@ -28,26 +30,21 @@ jobs:
             assets/github-snake.svg
             assets/github-snake-dark.svg?palette=github-dark
 
-      - name: Commit generated snake
-        uses: EndBug/add-and-commit@v9
-        with:
-          add: assets/github-snake*.svg
-          message: "chore: update contribution snake"
-
-  profile-3d:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout profile repository
-        uses: actions/checkout@v4
-
       - name: Generate 3D contribution profile
         uses: yoshi389111/github-profile-3d-contrib@0.9.0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           USERNAME: ${{ github.repository_owner }}
 
-      - name: Commit generated 3D profile
-        uses: EndBug/add-and-commit@v9
-        with:
-          add: "profile-3d-contrib/*.svg"
-          message: "chore: update 3d contribution profile"
+      - name: Commit generated profile assets
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add assets/github-snake*.svg profile-3d-contrib/*.svg
+          if git diff --cached --quiet; then
+            echo "No generated profile asset changes."
+            exit 0
+          fi
+          git commit -m "chore: update generated profile assets"
+          git pull --rebase origin main
+          git push origin HEAD:main
