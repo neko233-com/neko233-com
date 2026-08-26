@@ -103,6 +103,7 @@
 <br />
 <br />
 
-<sub>NEKO233 // BUILD · PLAY · SHIP</sub>
+@neko233
 
 </div>
+
